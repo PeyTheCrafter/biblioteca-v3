@@ -8,10 +8,10 @@ public class Estanteria {
 
 	public static void main(String[] args) {
 		Estanteria e = new Estanteria();
-		System.out.println(e.insertarLibro(new Libro("1")));
-		System.out.println(e.insertarLibro(new Libro("2")));
-		System.out.println(e.buscarIndice());
-		System.out.println(e.borrarLibro("2"));
+		e.insertarLibro(new Libro("1"));
+		e.insertarLibro(new Libro("2"));
+		e.buscarIndice();
+		e.borrarLibro("2");
 	}
 
 	private <T> void mostrar(T[] array) {
@@ -26,13 +26,19 @@ public class Estanteria {
 		return !this.libros[indice].equals(null);
 	}
 
+	/**
+	 * Borra un libro por su nombre.
+	 * @param nombre: el nombre del libro.
+	 * @return true si lo borra, false si no.
+	 */
 	public boolean borrarLibro(String nombre) {
 		int indice = this.posicionLibro(nombre);
+		System.out.println(indice);
 		this.libros[indice] = null;
 		return this.libros[indice].equals(null);
 	}
 
-	private int buscarIndice() {
+	public int buscarIndice() {
 		for (int i = 0; i < this.libros.length; i++) {
 			if (this.libros[i] == null) {
 				return i;
@@ -41,6 +47,11 @@ public class Estanteria {
 		return -1;
 	}
 
+	/**
+	 * Busca un libro por su nombre.
+	 * @param nombre: el nombre del libro.
+	 * @return el libro si lo encuentra, null si no.
+	 */
 	public Libro buscarLibro(String nombre) {
 		for (Libro libro : libros) {
 			if (libro.getTitulo().contains(nombre)) {
@@ -50,12 +61,22 @@ public class Estanteria {
 		return null;
 	}
 
-	private int posicionLibro(String nombre) {
+	/**
+	 * Busca la posición del un libro por su nombre.
+	 * @param nombre: nombre del libro a buscar.
+	 * @return la posición si lo ha encontrado, -1 si no.
+	 */
+	public int posicionLibro(String nombre) {
 		for (int i = 0; i < this.libros.length; i++) {
-			if (this.libros[i].getTitulo() == nombre) {
+			if (this.libros[i].getTitulo().toLowerCase().equals(nombre.toLowerCase())) {
 				return i;
 			}
 		}
 		return -1;
 	}
+
+	public Libro[] getLibros() {
+		return libros;
+	}
+
 }
