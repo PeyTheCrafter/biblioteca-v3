@@ -1,8 +1,5 @@
 package modelo;
 
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-
 public class Estanteria {
 	private Libro[] libros = new Libro[100];
 
@@ -20,6 +17,12 @@ public class Estanteria {
 		}
 	}
 
+	/**
+	 * PROPORCIONADO.
+	 * Inserta un libro en el array.
+	 * @param libro: el libro a insertar.
+	 * @return true si lo ha guardado, false si no.
+	 */
 	public boolean insertarLibro(Libro libro) {
 		int indice = this.buscarIndice();
 		this.libros[indice] = libro;
@@ -27,6 +30,7 @@ public class Estanteria {
 	}
 
 	/**
+	 * PROPORCIONADO.
 	 * Borra un libro por su nombre.
 	 * @param nombre: el nombre del libro.
 	 * @return true si lo borra, false si no.
@@ -35,9 +39,14 @@ public class Estanteria {
 		int indice = this.posicionLibro(nombre);
 		System.out.println(indice);
 		this.libros[indice] = null;
-		return this.libros[indice].equals(null);
+		return this.libros[indice] == null;
 	}
 
+	/**
+	 * PROPIO.
+	 * Busca el primer hueco libre que haya.
+	 * @return el índice del hueco encontrado.
+	 */
 	public int buscarIndice() {
 		for (int i = 0; i < this.libros.length; i++) {
 			if (this.libros[i] == null) {
@@ -48,6 +57,7 @@ public class Estanteria {
 	}
 
 	/**
+	 * PROPORCIONADO.
 	 * Busca un libro por su nombre.
 	 * @param nombre: el nombre del libro.
 	 * @return el libro si lo encuentra, null si no.
@@ -62,6 +72,7 @@ public class Estanteria {
 	}
 
 	/**
+	 * PROPORCIONADO.
 	 * Busca la posición del un libro por su nombre.
 	 * @param nombre: nombre del libro a buscar.
 	 * @return la posición si lo ha encontrado, -1 si no.

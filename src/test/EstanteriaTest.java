@@ -11,11 +11,6 @@ import modelo.Libro;
 class EstanteriaTest {
 	Estanteria instancia = new Estanteria();
 
-	@Ignore
-	void testMain() {
-		fail("Not yet implemented");
-	}
-
 	@Test
 	void testInsertarLibro() {
 		// Preparatoria.
@@ -28,8 +23,10 @@ class EstanteriaTest {
 		assertEquals(salida[0].getTitulo(), this.instancia.getLibros()[0].getTitulo());
 	}
 
-	@Ignore
+	@Test
 	void testBorrarLibro() {
+		this.instancia = new Estanteria();
+		this.instancia.insertarLibro(new Libro("Uno"));
 		this.instancia.borrarLibro("Uno");
 		assertNull(this.instancia.getLibros()[0]);
 	}

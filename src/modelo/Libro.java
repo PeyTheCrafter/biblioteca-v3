@@ -10,6 +10,7 @@ public class Libro {
 	private String formatoTres;
 	private String estado;
 	private String locTema;
+	private String isbn;
 
 	public Libro(String titulo, String autor, String tema, String numPaginas, String formatoUno, String formatoDos,
 			String formatoTres, String estado, String locTema) {
@@ -99,6 +100,14 @@ public class Libro {
 
 	public void setLocTema(String locTema) {
 		this.locTema = locTema;
+	}
+	
+	public String getIsbn() {
+		return isbn;
+	}
+
+	public void setIsbn(String isbn) {
+		this.isbn = isbn;
 	}
 
 }
