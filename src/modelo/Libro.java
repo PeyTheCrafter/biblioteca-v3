@@ -12,13 +12,14 @@ public class Libro {
 	private String locTema;
 	private String isbn;
 
-	public Libro(String titulo, String autor, String tema, String numPaginas, String formatoUno, String formatoDos,
+	public Libro(String titulo, String autor, String tema, String numPaginas, String isbn, String formatoUno, String formatoDos,
 			String formatoTres, String estado, String locTema) {
 		super();
 		this.titulo = titulo;
 		this.autor = autor;
 		this.tema = tema;
 		this.numPaginas = numPaginas;
+		this.isbn = isbn;
 		this.formatoUno = formatoUno;
 		this.formatoDos = formatoDos;
 		this.formatoTres = formatoTres;

@@ -9,7 +9,7 @@ import modelo.Estanteria;
 import modelo.Libro;
 
 class EstanteriaTest {
-	Estanteria instancia = new Estanteria();
+	Estanteria instancia = new Estanteria(100);
 
 	@Test
 	void testInsertarLibro() {
@@ -25,7 +25,7 @@ class EstanteriaTest {
 
 	@Test
 	void testBorrarLibro() {
-		this.instancia = new Estanteria();
+		this.instancia = new Estanteria(100);
 		this.instancia.insertarLibro(new Libro("Uno"));
 		this.instancia.borrarLibro("Uno");
 		assertNull(this.instancia.getLibros()[0]);
@@ -34,7 +34,7 @@ class EstanteriaTest {
 	@Test
 	void testBuscarIndice() {
 		int posicion = 3;
-		this.instancia = new Estanteria();
+		this.instancia = new Estanteria(100);
 		this.instancia.insertarLibro(new Libro(""));
 		this.instancia.insertarLibro(new Libro(""));
 		this.instancia.insertarLibro(new Libro(""));
@@ -43,7 +43,7 @@ class EstanteriaTest {
 
 	@Test
 	void testBuscarLibro() {
-		this.instancia = new Estanteria();
+		this.instancia = new Estanteria(100);
 		this.instancia.insertarLibro(new Libro("Uno"));
 		this.instancia.insertarLibro(new Libro("Dos"));
 		this.instancia.insertarLibro(new Libro("Tres"));
@@ -52,7 +52,7 @@ class EstanteriaTest {
 
 	@Test
 	void testPosicionLibro() {
-		this.instancia = new Estanteria();
+		this.instancia = new Estanteria(100);
 		this.instancia.insertarLibro(new Libro("Uno"));
 		this.instancia.insertarLibro(new Libro("Dos"));
 		this.instancia.insertarLibro(new Libro("Tres"));

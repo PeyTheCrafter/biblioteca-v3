@@ -14,8 +14,7 @@ public class EventoNuevo implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
-		System.out.println("Nuevo.");
-		
+		this.paraUI.limpiarPantalla();
 	}
 
 }
