@@ -30,6 +30,11 @@ public class Libro {
 	public Libro(String titulo) {
 		this.titulo = titulo;
 	}
+	
+	public Libro(String titulo, String isbn) {
+		this.titulo = titulo;
+		this.isbn = isbn;
+	}
 
 	public String getTitulo() {
 		return titulo;

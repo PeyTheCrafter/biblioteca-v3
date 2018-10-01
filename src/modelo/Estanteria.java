@@ -8,6 +8,17 @@ public class Estanteria {
 		this.libros = new Libro[tamano];
 	}
 
+	public static void main(String[] args) {
+		Estanteria es = new Estanteria(10);
+		System.out.println(es.insertarLibro(new Libro("uno", "1")));
+		System.out.println(es.insertarLibro(new Libro("dos", "1")));
+		System.out.println(es.insertarLibro(new Libro("dos", "2")));
+		System.out.println(es.getLibros()[0].getTitulo());
+		System.out.println(es.getLibros()[1].getTitulo());
+		// System.out.println(es.getLibros()[2].getTitulo());
+		System.out.println(es.buscarLibro("A"));
+	}
+
 	/**
 	 * PROPORCIONADO. Inserta un libro en el array.
 	 * 
@@ -22,7 +33,7 @@ public class Estanteria {
 		}
 		return this.libros[indice] != null;
 	}
-	
+
 	private void mostrar(Libro libro) {
 		assert libro != null;
 		System.out.println(libro.getAutor());
@@ -39,8 +50,8 @@ public class Estanteria {
 	 * @return true si está repetido, false si no.
 	 */
 	private boolean comprobarISBNRepetido(String isbn) {
-		for(int i = 0; i < this.libros.length; i++) {
-			if(this.libros[i] != null && this.libros[i].getIsbn().equals(isbn)) {
+		for (int i = 0; i < this.libros.length; i++) {
+			if (this.libros[i] != null && this.libros[i].getIsbn().equals(isbn)) {
 				return true;
 			}
 		}
@@ -92,8 +103,8 @@ public class Estanteria {
 	 * @return el libro si lo encuentra, null si no.
 	 */
 	public Libro buscarLibro(String nombre) {
-		for (Libro libro : libros) {
-			if (libro.getTitulo().contains(nombre)) {
+		for (Libro libro : this.getLibros()) {
+			if (libro != null && libro.getTitulo().contains(nombre)) {
 				return libro;
 			}
 		}
@@ -108,8 +119,9 @@ public class Estanteria {
 	 * @return la posición si lo ha encontrado, -1 si no.
 	 */
 	public int posicionLibro(String nombre) {
-		for (int i = 0; i < this.libros.length; i++) {
-			if (this.libros[i].getTitulo().toLowerCase().equals(nombre.toLowerCase())) {
+		for (int i = 0; i < this.getLibros().length; i++) {
+			if (this.getLibros()[i] != null
+					&& this.getLibros()[i].getTitulo().toLowerCase().equals(nombre.toLowerCase())) {
 				return i;
 			}
 		}
