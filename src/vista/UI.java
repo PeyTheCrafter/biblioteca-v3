@@ -11,6 +11,7 @@ import javax.swing.UnsupportedLookAndFeelException;
 
 import java.awt.Font;
 import java.awt.Panel;
+import java.util.Vector;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
@@ -19,9 +20,16 @@ import javax.swing.JComboBox;
 import javax.swing.JCheckBox;
 import javax.swing.JRadioButton;
 import javax.swing.border.TitledBorder;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 import javax.swing.JButton;
 import javax.swing.JList;
 import java.awt.Color;
+import javax.swing.JTable;
+import javax.swing.JScrollPane;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import javax.swing.ListSelectionModel;
 
 public class UI extends JFrame {
 
@@ -39,12 +47,15 @@ public class UI extends JFrame {
 	protected JCheckBox chkTapaDura;
 	protected JRadioButton radialNovedad;
 	protected JRadioButton radialReedicion;
-	protected JList listaLibros;
+	protected JTable listaLibros;
+	protected JTable table;
+	private JScrollPane scrollPane;
 
 	/**
 	 * Create the frame.
 	 */
 	public UI() {
+		setResizable(false);
 		try {
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException
@@ -70,7 +81,7 @@ public class UI extends JFrame {
 		GridBagLayout gbl_panelPrincipal = new GridBagLayout();
 		gbl_panelPrincipal.columnWidths = new int[] { 30, 0, 100, 0, 0, 30, 0 };
 		gbl_panelPrincipal.rowHeights = new int[] { 0, 0, 0, 0, 0 };
-		gbl_panelPrincipal.columnWeights = new double[] { 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, Double.MIN_VALUE };
+		gbl_panelPrincipal.columnWeights = new double[] { 0.0, 1.0, 0.0, 1.0, 0.0, 0.0, Double.MIN_VALUE };
 		gbl_panelPrincipal.rowWeights = new double[] { 0.0, 0.0, 1.0, 0.0, Double.MIN_VALUE };
 		panelPrincipal.setLayout(gbl_panelPrincipal);
 
@@ -291,14 +302,18 @@ public class UI extends JFrame {
 		gbc_radialReedicion.gridy = 1;
 		panelEstado.add(radialReedicion, gbc_radialReedicion);
 
-		listaLibros = new JList();
-		listaLibros.setBackground(Color.LIGHT_GRAY);
-		GridBagConstraints gbc_listaLibros = new GridBagConstraints();
-		gbc_listaLibros.gridwidth = 4;
-		gbc_listaLibros.insets = new Insets(0, 0, 5, 5);
-		gbc_listaLibros.fill = GridBagConstraints.BOTH;
-		gbc_listaLibros.gridx = 1;
-		gbc_listaLibros.gridy = 2;
-		panelPrincipal.add(listaLibros, gbc_listaLibros);
+		scrollPane = new JScrollPane();
+		scrollPane.setBackground(Color.LIGHT_GRAY);
+		GridBagConstraints gbc_scrollPane = new GridBagConstraints();
+		gbc_scrollPane.gridwidth = 4;
+		gbc_scrollPane.insets = new Insets(0, 0, 5, 5);
+		gbc_scrollPane.fill = GridBagConstraints.BOTH;
+		gbc_scrollPane.gridx = 1;
+		gbc_scrollPane.gridy = 2;
+		panelPrincipal.add(scrollPane, gbc_scrollPane);
+		table = new JTable();
+		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		scrollPane.setViewportView(table);
+		table.setBackground(Color.LIGHT_GRAY);
 	}
 }
