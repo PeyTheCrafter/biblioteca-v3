@@ -1,65 +1,73 @@
 package test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.*;
 
-import org.junit.Ignore;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
 import modelo.Estanteria;
 import modelo.Libro;
 
-class EstanteriaTest {
-	Estanteria instancia = new Estanteria(100);
+public class EstanteriaTest {
 
 	@Test
-	void testInsertarLibro() {
-		// Preparatoria.
-		Libro[] salida = new Libro[5];
-		Libro libro = new Libro("Uno");
-		salida[0] = libro;
-
-		// Prueba.
-		this.instancia.insertarLibro(libro);
-		assertEquals(salida[0].getTitulo(), this.instancia.getLibros()[0].getTitulo());
+	public void testInsertarLibro() {
+		Estanteria es = new Estanteria(5);
+		Libro esp[] = new Libro[5];
+		esp[0] = new Libro("Uno", "1");
+		esp[1] = new Libro("Libro", "2");
+		es.insertarLibro(new Libro("Uno", "1"));
+		es.insertarLibro(new Libro("Libro", "2"));
+		assertEquals(esp[0].getTitulo(), es.getLibros()[0].getTitulo());
+		assertEquals(esp[1].getTitulo(), es.getLibros()[1].getTitulo());
 	}
 
 	@Test
-	void testBorrarLibro() {
-		this.instancia = new Estanteria(100);
-		this.instancia.insertarLibro(new Libro("Uno"));
-		this.instancia.borrarLibro("Uno");
-		assertNull(this.instancia.getLibros()[0]);
+	public void testBorrarLibro() {
+		Estanteria es = new Estanteria(10);
+		es.insertarLibro(new Libro("Uno", "1"));
+		es.insertarLibro(new Libro("Dos", "2"));
+		es.insertarLibro(new Libro("Tres", "3"));
+		es.insertarLibro(new Libro("Cuatro", "4"));
+		es.insertarLibro(new Libro("Cinco", "5"));
+		es.borrarLibro("Dos");
+		assertNull(es.getLibros()[1]);
 	}
 
 	@Test
-	void testBuscarIndice() {
-		int posicion = 3;
-		this.instancia = new Estanteria(100);
-		this.instancia.insertarLibro(new Libro(""));
-		this.instancia.insertarLibro(new Libro(""));
-		this.instancia.insertarLibro(new Libro(""));
-		assertEquals(posicion, this.instancia.buscarIndice());
+	public void testBuscarIndice() {
+		Estanteria es = new Estanteria(10);
+		es.insertarLibro(new Libro("Uno", "1"));
+		es.insertarLibro(new Libro("Dos", "2"));
+		es.insertarLibro(new Libro("Tres", "3"));
+		es.insertarLibro(new Libro("Cuatro", "4"));
+		es.insertarLibro(new Libro("Cinco", "5"));
+		es.borrarLibro("Dos");
+		assertEquals(1, es.buscarIndice());
 	}
 
 	@Test
-	void testBuscarLibro() {
-		this.instancia = new Estanteria(100);
-		this.instancia.insertarLibro(new Libro("Uno"));
-		this.instancia.insertarLibro(new Libro("Dos"));
-		this.instancia.insertarLibro(new Libro("Tres"));
-		assertEquals(new Libro("Uno").getTitulo(), this.instancia.buscarLibro("Uno").getTitulo());
+	public void testBuscarLibro() {
+		Estanteria es = new Estanteria(10);
+		Libro esp = new Libro("Tres", "3");
+		es.insertarLibro(new Libro("Uno", "1"));
+		es.insertarLibro(new Libro("Dos", "2"));
+		es.insertarLibro(new Libro("Tres", "3"));
+		es.insertarLibro(new Libro("Cuatro", "4"));
+		es.insertarLibro(new Libro("Cinco", "5"));
+		assertEquals(esp.getTitulo(), es.buscarLibro("Tres").getTitulo());
+		assertNull(es.buscarLibro("AAAA"));
 	}
 
 	@Test
-	void testPosicionLibro() {
-		this.instancia = new Estanteria(100);
-		this.instancia.insertarLibro(new Libro("Uno"));
-		this.instancia.insertarLibro(new Libro("Dos"));
-		this.instancia.insertarLibro(new Libro("Tres"));
-		this.instancia.insertarLibro(new Libro("Cuatro"));
-		this.instancia.insertarLibro(new Libro("Cinco"));
-		assertEquals(1, this.instancia.posicionLibro("Dos"));
-		assertEquals(3, this.instancia.posicionLibro("Cuatro"));
+	public void testPosicionLibro() {
+		Estanteria es = new Estanteria(10);
+		es.insertarLibro(new Libro("Uno", "1"));
+		es.insertarLibro(new Libro("Dos", "2"));
+		es.insertarLibro(new Libro("Tres", "3"));
+		es.insertarLibro(new Libro("Cuatro", "4"));
+		es.insertarLibro(new Libro("Cinco", "5"));
+		assertEquals(2, es.posicionLibro("Tres"));
+		assertEquals(-1, es.posicionLibro("AAAA"));
 	}
 
 }

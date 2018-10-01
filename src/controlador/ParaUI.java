@@ -23,6 +23,9 @@ public class ParaUI extends UI {
 		this.table.setModel(this.getModel());
 	}
 
+	/**
+	 * Asigna los eventos de los componentes de la ventana.
+	 */
 	private void asignarEventos() {
 		this.btnNuevo.addActionListener(new EventoNuevo(this));
 		this.btnAlta.addActionListener(new EventoAlta(this));
@@ -30,6 +33,9 @@ public class ParaUI extends UI {
 		this.table.addMouseListener(new EventoTabla(this));
 	}
 
+	/**
+	 * Vacía todos los datos de la pantalla.
+	 */
 	public void limpiarPantalla() {
 		this.txtAutor.setText("");
 		this.txtISBN.setText("");
@@ -42,34 +48,14 @@ public class ParaUI extends UI {
 		this.radialReedicion.setSelected(false);
 	}
 
-	private TableModel getModel() {
-		return new DefaultTableModel(new Object[][] {}, new String[] { "Titulo", "Autor" }) {
-			private static final long serialVersionUID = 1L;
-			boolean[] columnEditables = new boolean[] { false, false };
-
-			public boolean isCellEditable(int row, int column) {
-				return columnEditables[column];
-			}
-		};
-	}
-
+	/**
+	 * Actualiza la lista de libros.
+	 */
 	public void actualizarLista() {
 		this.table.setModel(this.getModel());
 		for (int i = 0; i < this.TAMANO; i++) {
 			this.insertarTable(this.almacenamiento.getLibros()[i]);
 		}
-	}
-
-	private void insertarTable(Libro libro) {
-		if (libro != null) {
-			DefaultTableModel modelo = (DefaultTableModel) this.table.getModel();
-			modelo.addRow(introducirRejilla(libro));
-		}
-	}
-
-	private Object[] introducirRejilla(Libro libro) {
-		Object[] obj = { libro.getTitulo().toString(), libro.getIsbn().toString() };
-		return obj;
 	}
 
 	/**
@@ -111,6 +97,9 @@ public class ParaUI extends UI {
 		}
 	}
 
+	/**
+	 * Guarda un libro en el array.
+	 */
 	public void insertarLibro() {
 		Libro libro = new Libro(this.txtTitulo.getText(), this.txtAutor.getText(), this.comboTema.getSelectedIndex(),
 				this.txtPaginas.getText(), this.txtISBN.getText(), this.chkCartone.isSelected(),
@@ -123,12 +112,56 @@ public class ParaUI extends UI {
 		}
 	}
 
+	/**
+	 * Borra un libro a partir del que está seleccionado en la tabla.
+	 */
 	public void borrarLibro() {
 		String isbn = this.getSeleccionado();
 		int posicion = this.almacenamiento.posicionLibroISBN(isbn);
 		this.almacenamiento.borrarLibroPosicion(posicion);
 		this.actualizarLista();
 		this.limpiarPantalla();
+	}
+
+	/**
+	 * Método de la tabla. Inserta un libro en la tabla.
+	 * 
+	 * @param libro
+	 *            el libro para extraer los datos e introducirlos en la tabla.
+	 */
+	private void insertarTable(Libro libro) {
+		if (libro != null) {
+			DefaultTableModel modelo = (DefaultTableModel) this.table.getModel();
+			modelo.addRow(introducirRejilla(libro));
+		}
+	}
+
+	/**
+	 * Método de la tabla. Selecciona los datos del libro para introducirlos.
+	 * 
+	 * @param libro
+	 *            libro del que se extraen los datos.
+	 * @return los datos extraídos del libro.
+	 */
+	private Object[] introducirRejilla(Libro libro) {
+		Object[] obj = { libro.getTitulo().toString(), libro.getIsbn().toString() };
+		return obj;
+	}
+
+	/**
+	 * Método de la tabla.
+	 * 
+	 * @return un modelo vacío para la tabla.
+	 */
+	private TableModel getModel() {
+		return new DefaultTableModel(new Object[][] {}, new String[] { "Titulo", "Autor" }) {
+			private static final long serialVersionUID = 1L;
+			boolean[] columnEditables = new boolean[] { false, false };
+
+			public boolean isCellEditable(int row, int column) {
+				return columnEditables[column];
+			}
+		};
 	}
 
 	public Estanteria getAlmacenamiento() {

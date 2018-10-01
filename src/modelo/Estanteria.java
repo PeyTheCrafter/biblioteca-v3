@@ -2,99 +2,11 @@ package modelo;
 
 public class Estanteria {
 	private Libro[] libros;
-	private int uso = 0;
 
 	public Estanteria(int tamano) {
 		this.libros = new Libro[tamano];
 	}
-
-	/**
-	 * PROPORCIONADO. Inserta un libro en el array.
-	 * 
-	 * @param libro:
-	 *            el libro a insertar.
-	 * @return true si lo ha guardado, false si no.
-	 */
-	public boolean insertarLibro(Libro libro) {
-		int indice = this.buscarIndice();
-		if (indice != -1 && !this.comprobarISBNRepetido(libro.getIsbn())) {
-			this.libros[indice] = libro;
-		}
-		return this.libros[indice] != null;
-	}
-
-	private void mostrar(Libro libro) {
-		assert libro != null;
-		System.out.println(libro.getAutor());
-		System.out.println(libro.getTitulo());
-		System.out.println(libro.getNumPaginas());
-		System.out.println(libro.getIsbn());
-	}
-
-	/**
-	 * PROPIO. Comprueba si el ISBN del libro está repetido.
-	 * 
-	 * @param isbn:
-	 *            el código a comprobar.
-	 * @return true si está repetido, false si no.
-	 */
-	private boolean comprobarISBNRepetido(String isbn) {
-		for (int i = 0; i < this.libros.length; i++) {
-			if (this.libros[i] != null && this.libros[i].getIsbn().equals(isbn)) {
-				return true;
-			}
-		}
-		return false;
-	}
-
-	private void usoMemoria() {
-		this.setUso(0);
-		for (Libro libro : libros) {
-			if (libro != null) {
-				this.setUso(this.getUso() + 1);
-			}
-		}
-	}
-
-	/**
-	 * PROPORCIONADO. Borra un libro por su nombre.
-	 * 
-	 * @param nombre:
-	 *            el nombre del libro.
-	 * @return true si lo borra, false si no.
-	 */
-	public boolean borrarLibro(String nombre) {
-		int indice = this.posicionLibro(nombre);
-		System.out.println(indice);
-		this.libros[indice] = null;
-		return this.libros[indice] == null;
-	}
-
-	/**
-	 * PROPIO. Borra un libro por su ISBN.
-	 * 
-	 * @param nombre:
-	 *            el ISBN del libro.
-	 * @return true si lo borra, false si no.
-	 */
-	public boolean borrarLibroISBN(String isbn) {
-		int indice = this.posicionLibroISBN(isbn);
-		System.out.println(indice);
-		this.libros[indice] = null;
-		return this.libros[indice] == null;
-	}
-
-	public boolean borrarLibroPosicion(int indice) {
-		if (indice >= 0 && indice < this.libros.length) {
-			Libro libro = this.getLibros()[indice];
-			if (libro != null) {
-				this.getLibros()[indice] = null;
-			}
-			return this.getLibros()[indice] == null;
-		}
-		return false;
-	}
-
+	
 	/**
 	 * PROPIO. Busca el primer hueco libre que haya.
 	 * 
@@ -108,23 +20,7 @@ public class Estanteria {
 		}
 		return -1;
 	}
-
-	/**
-	 * PROPORCIONADO. Busca un libro por su nombre.
-	 * 
-	 * @param nombre:
-	 *            el nombre del libro.
-	 * @return el libro si lo encuentra, null si no.
-	 */
-	public Libro buscarLibro(String nombre) {
-		for (Libro libro : this.getLibros()) {
-			if (libro != null && libro.getTitulo().contains(nombre)) {
-				return libro;
-			}
-		}
-		return null;
-	}
-
+	
 	/**
 	 * PROPORCIONADO. Busca la posición del un libro por su nombre.
 	 * 
@@ -141,7 +37,7 @@ public class Estanteria {
 		}
 		return -1;
 	}
-
+	
 	/**
 	 * PROPIO. Busca la posición del un libro por su ISBN.
 	 * 
@@ -158,17 +54,70 @@ public class Estanteria {
 		}
 		return -1;
 	}
+	
+	/**
+	 * Borra la posición.
+	 * @param indice la posición a borrar.
+	 * @return true si se ha borrado, false si no.
+	 */
+	public boolean borrarLibroPosicion(int indice) {
+		if (indice >= 0 && indice < this.libros.length) {
+			Libro libro = this.getLibros()[indice];
+			if (libro != null) {
+				this.getLibros()[indice] = null;
+			}
+			return this.getLibros()[indice] == null;
+		}
+		return false;
+	}
+	
+	/**
+	 * PROPIO. Comprueba si el ISBN del libro está repetido.
+	 * 
+	 * @param isbn:
+	 *            el código a comprobar.
+	 * @return true si está repetido, false si no.
+	 */
+	private boolean comprobarISBNRepetido(String isbn) {
+		for (int i = 0; i < this.libros.length; i++) {
+			if (this.libros[i] != null && this.libros[i].getIsbn().equals(isbn)) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	/**
+	 * PROPORCIONADO. Inserta un libro en el array.
+	 * 
+	 * @param libro:
+	 *            el libro a insertar.
+	 * @return true si lo ha guardado, false si no.
+	 */
+	public boolean insertarLibro(Libro libro) {
+		int indice = this.buscarIndice();
+		if (indice != -1 && !this.comprobarISBNRepetido(libro.getIsbn())) {
+			this.libros[indice] = libro;
+		}
+		return this.libros[indice] != null;
+	}
+	
+	/**
+	 * PROPIO. Borra un libro por su ISBN.
+	 * 
+	 * @param nombre:
+	 *            el ISBN del libro.
+	 * @return true si lo borra, false si no.
+	 */
+	public boolean borrarLibroISBN(String isbn) {
+		int indice = this.posicionLibroISBN(isbn);
+		System.out.println(indice);
+		this.libros[indice] = null;
+		return this.libros[indice] == null;
+	}
 
 	public Libro[] getLibros() {
 		return libros;
-	}
-
-	public int getUso() {
-		return this.uso;
-	}
-
-	private void setUso(int uso) {
-		this.uso = uso;
 	}
 
 }
