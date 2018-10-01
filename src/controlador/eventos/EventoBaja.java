@@ -15,7 +15,7 @@ public class EventoBaja implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		//this.paraUI.borrarLibro();
+		this.paraUI.borrarLibro();
 	}
 
 }

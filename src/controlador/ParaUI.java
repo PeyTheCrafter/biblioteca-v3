@@ -30,12 +30,16 @@ public class ParaUI extends UI {
 		this.table.addMouseListener(new EventoTabla(this));
 	}
 
-	// TODO: gestionar combobox, radial y checkbox.
 	public void limpiarPantalla() {
 		this.txtAutor.setText("");
 		this.txtISBN.setText("");
 		this.txtPaginas.setText("");
 		this.txtTitulo.setText("");
+		this.chkCartone.setSelected(false);
+		this.chkRustica.setSelected(false);
+		this.chkTapaDura.setSelected(false);
+		this.radialNovedad.setSelected(false);
+		this.radialReedicion.setSelected(false);
 	}
 
 	private TableModel getModel() {
@@ -50,40 +54,81 @@ public class ParaUI extends UI {
 	}
 
 	public void actualizarLista() {
-
+		this.table.setModel(this.getModel());
+		for (int i = 0; i < this.TAMANO; i++) {
+			this.insertarTable(this.almacenamiento.getLibros()[i]);
+		}
 	}
 
 	private void insertarTable(Libro libro) {
-		// this.table.setModel(this.prepararTabla());
-		DefaultTableModel modelo = (DefaultTableModel) this.table.getModel();
-		modelo.addRow(introducirRejilla(libro));
+		if (libro != null) {
+			DefaultTableModel modelo = (DefaultTableModel) this.table.getModel();
+			modelo.addRow(introducirRejilla(libro));
+		}
 	}
 
-	protected Object[] introducirRejilla(Libro libro) {
-		Object[] obj = { libro.getTitulo().toString(), libro.getAutor().toString() };
+	private Object[] introducirRejilla(Libro libro) {
+		Object[] obj = { libro.getTitulo().toString(), libro.getIsbn().toString() };
 		return obj;
 	}
 
-	public String obtenerDatos() {
-		String titulo = "";
-		int colIndex = 0;
+	/**
+	 * Obtiene el isbn del libro seleccionado en la tabla.
+	 * 
+	 * @return el isbn.
+	 */
+	public String getSeleccionado() {
+		String dato = "";
+		int colIndex = 1;
 		int[] rowIndex = this.table.getSelectedRows();
 		for (int i : rowIndex) {
-			titulo = this.table.getModel().getValueAt(i, colIndex).toString();
+			dato = this.table.getModel().getValueAt(i, colIndex).toString();
 		}
-		System.out.println(titulo);
-		return titulo;
+		return dato;
+	}
+
+	/**
+	 * Muestra los datos del libro seleccionado en la tabla.
+	 */
+	public void mostrarDatos() {
+		this.limpiarPantalla();
+		String isbn = this.getSeleccionado();
+		int posicion = this.almacenamiento.posicionLibroISBN(isbn);
+		if (posicion != -1) {
+			Libro libro = this.almacenamiento.getLibros()[posicion];
+			this.txtTitulo.setText(libro.getTitulo());
+			this.txtAutor.setText(libro.getAutor());
+			this.txtPaginas.setText(libro.getNumPaginas());
+			this.txtISBN.setText(libro.getIsbn());
+			this.chkCartone.setSelected(libro.isCartone());
+			this.chkRustica.setSelected(libro.isRustico());
+			this.chkTapaDura.setSelected(libro.isTapaDura());
+			if (libro.isNovedad()) {
+				this.radialNovedad.setSelected(true);
+			} else {
+				this.radialReedicion.setSelected(true);
+			}
+		}
 	}
 
 	public void insertarLibro() {
-		Libro libro = new Libro(this.txtTitulo.getText(), this.txtAutor.getText(), "", this.txtPaginas.getText(),
-				this.txtISBN.getText(), "", "", "", "", "");
+		Libro libro = new Libro(this.txtTitulo.getText(), this.txtAutor.getText(), this.comboTema.getSelectedIndex(),
+				this.txtPaginas.getText(), this.txtISBN.getText(), this.chkCartone.isSelected(),
+				this.chkRustica.isSelected(), this.chkTapaDura.isSelected(), this.radialNovedad.isSelected());
 		boolean respuesta = this.almacenamiento.insertarLibro(libro);
 		if (!respuesta) {
 			System.out.println("Error al añadir libro.");
 		} else {
 			this.insertarTable(libro);
 		}
+	}
+
+	public void borrarLibro() {
+		String isbn = this.getSeleccionado();
+		int posicion = this.almacenamiento.posicionLibroISBN(isbn);
+		this.almacenamiento.borrarLibroPosicion(posicion);
+		this.actualizarLista();
+		this.limpiarPantalla();
 	}
 
 	public Estanteria getAlmacenamiento() {

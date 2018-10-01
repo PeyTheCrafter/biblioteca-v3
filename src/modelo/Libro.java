@@ -3,34 +3,32 @@ package modelo;
 public class Libro {
 	private String titulo;
 	private String autor;
-	private String tema;
+	private int tema;
 	private String numPaginas;
-	private String formatoUno;
-	private String formatoDos;
-	private String formatoTres;
-	private String estado;
-	private String locTema;
 	private String isbn;
+	private boolean cartone;
+	private boolean rustico;
+	private boolean tapaDura;
+	private boolean novedad;
 
-	public Libro(String titulo, String autor, String tema, String numPaginas, String isbn, String formatoUno, String formatoDos,
-			String formatoTres, String estado, String locTema) {
+	public Libro(String titulo, String autor, int tema, String numPaginas, String isbn, boolean cartone,
+			boolean rustico, boolean tapaDura, boolean novedad) {
 		super();
 		this.titulo = titulo;
 		this.autor = autor;
 		this.tema = tema;
 		this.numPaginas = numPaginas;
 		this.isbn = isbn;
-		this.formatoUno = formatoUno;
-		this.formatoDos = formatoDos;
-		this.formatoTres = formatoTres;
-		this.estado = estado;
-		this.locTema = locTema;
+		this.cartone = cartone;
+		this.rustico = rustico;
+		this.tapaDura = tapaDura;
+		this.novedad = novedad;
 	}
 
 	public Libro(String titulo) {
 		this.titulo = titulo;
 	}
-	
+
 	public Libro(String titulo, String isbn) {
 		this.titulo = titulo;
 		this.isbn = isbn;
@@ -40,80 +38,36 @@ public class Libro {
 		return titulo;
 	}
 
-	public void setTitulo(String titulo) {
-		this.titulo = titulo;
-	}
-
 	public String getAutor() {
 		return autor;
 	}
 
-	public void setAutor(String autor) {
-		this.autor = autor;
-	}
-
-	public String getTema() {
+	public int getTema() {
 		return tema;
-	}
-
-	public void setTema(String tema) {
-		this.tema = tema;
 	}
 
 	public String getNumPaginas() {
 		return numPaginas;
 	}
 
-	public void setNumPaginas(String numPaginas) {
-		this.numPaginas = numPaginas;
-	}
-
-	public String getFormatoUno() {
-		return formatoUno;
-	}
-
-	public void setFormatoUno(String formatoUno) {
-		this.formatoUno = formatoUno;
-	}
-
-	public String getFormatoDos() {
-		return formatoDos;
-	}
-
-	public void setFormatoDos(String formatoDos) {
-		this.formatoDos = formatoDos;
-	}
-
-	public String getFormatoTres() {
-		return formatoTres;
-	}
-
-	public void setFormatoTres(String formatoTres) {
-		this.formatoTres = formatoTres;
-	}
-
-	public String getEstado() {
-		return estado;
-	}
-
-	public void setEstado(String estado) {
-		this.estado = estado;
-	}
-
-	public String getLocTema() {
-		return locTema;
-	}
-
-	public void setLocTema(String locTema) {
-		this.locTema = locTema;
-	}
-	
 	public String getIsbn() {
 		return isbn;
 	}
 
-	public void setIsbn(String isbn) {
-		this.isbn = isbn;
+	public boolean isCartone() {
+		return cartone;
+	}
+
+	public boolean isRustico() {
+		return rustico;
+	}
+
+	public boolean isTapaDura() {
+		return tapaDura;
+	}
+
+	public boolean isNovedad() {
+		return novedad;
 	}
 
 }

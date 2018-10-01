@@ -8,17 +8,6 @@ public class Estanteria {
 		this.libros = new Libro[tamano];
 	}
 
-	public static void main(String[] args) {
-		Estanteria es = new Estanteria(10);
-		System.out.println(es.insertarLibro(new Libro("uno", "1")));
-		System.out.println(es.insertarLibro(new Libro("dos", "1")));
-		System.out.println(es.insertarLibro(new Libro("dos", "2")));
-		System.out.println(es.getLibros()[0].getTitulo());
-		System.out.println(es.getLibros()[1].getTitulo());
-		// System.out.println(es.getLibros()[2].getTitulo());
-		System.out.println(es.buscarLibro("A"));
-	}
-
 	/**
 	 * PROPORCIONADO. Inserta un libro en el array.
 	 * 
@@ -82,6 +71,31 @@ public class Estanteria {
 	}
 
 	/**
+	 * PROPIO. Borra un libro por su ISBN.
+	 * 
+	 * @param nombre:
+	 *            el ISBN del libro.
+	 * @return true si lo borra, false si no.
+	 */
+	public boolean borrarLibroISBN(String isbn) {
+		int indice = this.posicionLibroISBN(isbn);
+		System.out.println(indice);
+		this.libros[indice] = null;
+		return this.libros[indice] == null;
+	}
+
+	public boolean borrarLibroPosicion(int indice) {
+		if (indice >= 0 && indice < this.libros.length) {
+			Libro libro = this.getLibros()[indice];
+			if (libro != null) {
+				this.getLibros()[indice] = null;
+			}
+			return this.getLibros()[indice] == null;
+		}
+		return false;
+	}
+
+	/**
 	 * PROPIO. Busca el primer hueco libre que haya.
 	 * 
 	 * @return el índice del hueco encontrado.
@@ -122,6 +136,23 @@ public class Estanteria {
 		for (int i = 0; i < this.getLibros().length; i++) {
 			if (this.getLibros()[i] != null
 					&& this.getLibros()[i].getTitulo().toLowerCase().equals(nombre.toLowerCase())) {
+				return i;
+			}
+		}
+		return -1;
+	}
+
+	/**
+	 * PROPIO. Busca la posición del un libro por su ISBN.
+	 * 
+	 * @param nombre:
+	 *            ISBN del libro a buscar.
+	 * @return la posición si lo ha encontrado, -1 si no.
+	 */
+	public int posicionLibroISBN(String isbn) {
+		for (int i = 0; i < this.getLibros().length; i++) {
+			if (this.getLibros()[i] != null
+					&& this.getLibros()[i].getTitulo().toLowerCase().equals(isbn.toLowerCase())) {
 				return i;
 			}
 		}

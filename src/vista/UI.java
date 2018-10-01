@@ -30,6 +30,7 @@ import javax.swing.JScrollPane;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.ListSelectionModel;
+import javax.swing.ButtonGroup;
 
 public class UI extends JFrame {
 
@@ -50,6 +51,7 @@ public class UI extends JFrame {
 	protected JTable listaLibros;
 	protected JTable table;
 	private JScrollPane scrollPane;
+	private final ButtonGroup buttonGroup = new ButtonGroup();
 
 	/**
 	 * Create the frame.
@@ -286,6 +288,7 @@ public class UI extends JFrame {
 		panelEstado.setLayout(gbl_panelEstado);
 
 		radialNovedad = new JRadioButton("Novedad");
+		buttonGroup.add(radialNovedad);
 		radialNovedad.setBackground(new Color(51, 102, 102));
 		GridBagConstraints gbc_radialNovedad = new GridBagConstraints();
 		gbc_radialNovedad.anchor = GridBagConstraints.WEST;
@@ -295,6 +298,7 @@ public class UI extends JFrame {
 		panelEstado.add(radialNovedad, gbc_radialNovedad);
 
 		radialReedicion = new JRadioButton("Reedici\u00F3n");
+		buttonGroup.add(radialReedicion);
 		radialReedicion.setBackground(new Color(51, 102, 102));
 		GridBagConstraints gbc_radialReedicion = new GridBagConstraints();
 		gbc_radialReedicion.anchor = GridBagConstraints.WEST;
