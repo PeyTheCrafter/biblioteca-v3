@@ -15,6 +15,7 @@ public class EventoNuevo implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 		this.paraUI.limpiarPantalla();
+		this.paraUI.botones.global(true);
 	}
 
 }

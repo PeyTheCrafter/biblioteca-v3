@@ -1,18 +1,22 @@
 package controlador;
 
-import javax.swing.DefaultComboBoxModel;
+import javax.swing.JDialog;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
 import controlador.eventos.*;
 import modelo.Estanteria;
 import modelo.Libro;
-import modelo.Temas;
+import utiles.GestorAvisos;
+import utiles.GestorBotones;
 import vista.UI;
 
 public class ParaUI extends UI {
 	private Estanteria almacenamiento;
 	private static int TAMANO = 10;
+	private GestorAvisos ga = new GestorAvisos(this);
+	public GestorBotones botones = new GestorBotones(this);
 
 	public ParaUI() {
 		super();
@@ -106,9 +110,10 @@ public class ParaUI extends UI {
 				this.chkRustica.isSelected(), this.chkTapaDura.isSelected(), this.radialNovedad.isSelected());
 		boolean respuesta = this.almacenamiento.insertarLibro(libro);
 		if (!respuesta) {
-			System.out.println("Error al añadir libro.");
+			this.ga.error("Error al añadir el libro:", "Error de inserción");
 		} else {
 			this.insertarTable(libro);
+			this.ga.informacion("Libro añadido.", "Información");
 		}
 	}
 
@@ -118,7 +123,11 @@ public class ParaUI extends UI {
 	public void borrarLibro() {
 		String isbn = this.getSeleccionado();
 		int posicion = this.almacenamiento.posicionLibroISBN(isbn);
-		this.almacenamiento.borrarLibroPosicion(posicion);
+		if (!this.almacenamiento.borrarLibroPosicion(posicion)) {
+			this.ga.error("Error al borrar.", "Error de borrado");
+		} else {
+			this.ga.informacion("Libro borrado.", "información");
+		}
 		this.actualizarLista();
 		this.limpiarPantalla();
 	}

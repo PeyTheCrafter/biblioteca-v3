@@ -8,6 +8,10 @@ import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 import java.awt.Font;
 import java.awt.Panel;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionListener;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
@@ -56,13 +60,14 @@ public class UI extends JFrame {
 	 * Create the frame.
 	 */
 	public UI() {
-//		try {
-//			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-//		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException
-//				| UnsupportedLookAndFeelException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
+		// try {
+		// UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+		// } catch (ClassNotFoundException | InstantiationException |
+		// IllegalAccessException
+		// | UnsupportedLookAndFeelException e) {
+		// // TODO Auto-generated catch block
+		// e.printStackTrace();
+		// }
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 455, 589);
 		contentPane = new JPanel();
@@ -86,6 +91,7 @@ public class UI extends JFrame {
 		panelPrincipal.setLayout(gbl_panelPrincipal);
 
 		panelDatos = new JPanel();
+		panelDatos.setRequestFocusEnabled(false);
 		panelDatos.setBackground(new Color(51, 102, 102));
 		GridBagConstraints gbc_panelDatos = new GridBagConstraints();
 		gbc_panelDatos.gridwidth = 3;
@@ -110,6 +116,7 @@ public class UI extends JFrame {
 		panelDatos.add(lblTtulo, gbc_lblTtulo);
 
 		txtTitulo = new JTextField();
+		txtTitulo.setEditable(false);
 		txtTitulo.setBackground(Color.LIGHT_GRAY);
 		GridBagConstraints gbc_txtTitulo = new GridBagConstraints();
 		gbc_txtTitulo.fill = GridBagConstraints.HORIZONTAL;
@@ -128,6 +135,7 @@ public class UI extends JFrame {
 		panelDatos.add(lblAutor, gbc_lblAutor);
 
 		txtAutor = new JTextField();
+		txtAutor.setEditable(false);
 		txtAutor.setBackground(Color.LIGHT_GRAY);
 		GridBagConstraints gbc_txtAutor = new GridBagConstraints();
 		gbc_txtAutor.fill = GridBagConstraints.HORIZONTAL;
@@ -144,15 +152,16 @@ public class UI extends JFrame {
 		gbc_lblTema.gridx = 0;
 		gbc_lblTema.gridy = 2;
 		panelDatos.add(lblTema, gbc_lblTema);
-		
+
 		comboTema = new JComboBox();
-		comboTema.setModel(new DefaultComboBoxModel(Temas.values()));
+		comboTema.setEnabled(false);
 		GridBagConstraints gbc_comboTema = new GridBagConstraints();
-		gbc_comboTema.insets = new Insets(0, 0, 5, 0);
 		gbc_comboTema.fill = GridBagConstraints.HORIZONTAL;
+		gbc_comboTema.insets = new Insets(0, 0, 5, 0);
 		gbc_comboTema.gridx = 1;
 		gbc_comboTema.gridy = 2;
 		panelDatos.add(comboTema, gbc_comboTema);
+		comboTema.setModel(new DefaultComboBoxModel(Temas.values()));
 
 		JLabel lblPginas = new JLabel("P\u00E1ginas");
 		GridBagConstraints gbc_lblPginas = new GridBagConstraints();
@@ -163,6 +172,7 @@ public class UI extends JFrame {
 		panelDatos.add(lblPginas, gbc_lblPginas);
 
 		txtPaginas = new JTextField();
+		txtPaginas.setEditable(false);
 		txtPaginas.setBackground(Color.LIGHT_GRAY);
 		GridBagConstraints gbc_txtPaginas = new GridBagConstraints();
 		gbc_txtPaginas.fill = GridBagConstraints.HORIZONTAL;
@@ -181,6 +191,7 @@ public class UI extends JFrame {
 		panelDatos.add(lblIsbn, gbc_lblIsbn);
 
 		txtISBN = new JTextField();
+		txtISBN.setEditable(false);
 		txtISBN.setBackground(Color.LIGHT_GRAY);
 		GridBagConstraints gbc_txtISBN = new GridBagConstraints();
 		gbc_txtISBN.fill = GridBagConstraints.HORIZONTAL;
@@ -213,6 +224,7 @@ public class UI extends JFrame {
 		panelBotones.add(btnNuevo, gbc_btnNuevo);
 
 		btnAlta = new JButton("Alta");
+		btnAlta.setEnabled(false);
 		GridBagConstraints gbc_btnAlta = new GridBagConstraints();
 		gbc_btnAlta.fill = GridBagConstraints.BOTH;
 		gbc_btnAlta.insets = new Insets(0, 0, 5, 0);
@@ -221,6 +233,7 @@ public class UI extends JFrame {
 		panelBotones.add(btnAlta, gbc_btnAlta);
 
 		btnBaja = new JButton("Baja");
+		btnBaja.setEnabled(false);
 		GridBagConstraints gbc_btnBaja = new GridBagConstraints();
 		gbc_btnBaja.fill = GridBagConstraints.BOTH;
 		gbc_btnBaja.gridx = 1;
@@ -244,6 +257,7 @@ public class UI extends JFrame {
 		panelFormato.setLayout(gbl_panelFormato);
 
 		chkCartone = new JCheckBox("Carton\u00E9");
+		chkCartone.setEnabled(false);
 		chkCartone.setBackground(new Color(51, 102, 102));
 		GridBagConstraints gbc_chkCartone = new GridBagConstraints();
 		gbc_chkCartone.anchor = GridBagConstraints.WEST;
@@ -253,6 +267,7 @@ public class UI extends JFrame {
 		panelFormato.add(chkCartone, gbc_chkCartone);
 
 		chkRustica = new JCheckBox("R\u00FAstica");
+		chkRustica.setEnabled(false);
 		chkRustica.setBackground(new Color(51, 102, 102));
 		GridBagConstraints gbc_chkRustica = new GridBagConstraints();
 		gbc_chkRustica.anchor = GridBagConstraints.WEST;
@@ -262,6 +277,7 @@ public class UI extends JFrame {
 		panelFormato.add(chkRustica, gbc_chkRustica);
 
 		chkTapaDura = new JCheckBox("Tapa dura");
+		chkTapaDura.setEnabled(false);
 		chkTapaDura.setBackground(new Color(51, 102, 102));
 		GridBagConstraints gbc_chkTapaDura = new GridBagConstraints();
 		gbc_chkTapaDura.anchor = GridBagConstraints.WEST;
@@ -286,6 +302,7 @@ public class UI extends JFrame {
 		panelEstado.setLayout(gbl_panelEstado);
 
 		radialNovedad = new JRadioButton("Novedad");
+		radialNovedad.setEnabled(false);
 		buttonGroup.add(radialNovedad);
 		radialNovedad.setBackground(new Color(51, 102, 102));
 		GridBagConstraints gbc_radialNovedad = new GridBagConstraints();
@@ -296,6 +313,7 @@ public class UI extends JFrame {
 		panelEstado.add(radialNovedad, gbc_radialNovedad);
 
 		radialReedicion = new JRadioButton("Reedici\u00F3n");
+		radialReedicion.setEnabled(false);
 		buttonGroup.add(radialReedicion);
 		radialReedicion.setBackground(new Color(51, 102, 102));
 		GridBagConstraints gbc_radialReedicion = new GridBagConstraints();
@@ -318,4 +336,61 @@ public class UI extends JFrame {
 		scrollPane.setViewportView(table);
 		table.setBackground(Color.LIGHT_GRAY);
 	}
+
+	public JTextField getTxtTitulo() {
+		return txtTitulo;
+	}
+
+	public JTextField getTxtAutor() {
+		return txtAutor;
+	}
+
+	public JTextField getTxtPaginas() {
+		return txtPaginas;
+	}
+
+	public JTextField getTxtISBN() {
+		return txtISBN;
+	}
+
+	public JButton getBtnNuevo() {
+		return btnNuevo;
+	}
+
+	public JButton getBtnAlta() {
+		return btnAlta;
+	}
+
+	public JButton getBtnBaja() {
+		return btnBaja;
+	}
+
+	public JCheckBox getChkCartone() {
+		return chkCartone;
+	}
+
+	public JCheckBox getChkRustica() {
+		return chkRustica;
+	}
+
+	public JCheckBox getChkTapaDura() {
+		return chkTapaDura;
+	}
+
+	public JRadioButton getRadialNovedad() {
+		return radialNovedad;
+	}
+
+	public JRadioButton getRadialReedicion() {
+		return radialReedicion;
+	}
+
+	public JComboBox<Temas> getComboTema() {
+		return comboTema;
+	}
+
+	public void setTxtAutor(JTextField txtAutor) {
+		this.txtAutor = txtAutor;
+	}
+
 }

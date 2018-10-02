@@ -7,13 +7,6 @@ public class Estanteria {
 		this.libros = new Libro[tamano];
 	}
 
-	public static void main(String[] args) {
-		Estanteria es = new Estanteria(10);
-		es.insertarLibro(new Libro("Uno", "1"));
-		System.out.println(es.posicionLibroISBN("1"));
-		es.borrarLibroISBN("1");
-	}
-
 	/**
 	 * PROPIO. Busca el primer hueco libre que haya.
 	 * 

@@ -16,5 +16,6 @@ public class EventoAlta implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		this.paraUI.insertarLibro();
+		this.paraUI.botones.global(false);
 	}
 }
