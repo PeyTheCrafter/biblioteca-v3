@@ -1,14 +1,13 @@
 package controlador;
 
-import java.awt.Component;
-
-import javax.swing.DefaultListModel;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
 import controlador.eventos.*;
 import modelo.Estanteria;
 import modelo.Libro;
+import modelo.Temas;
 import vista.UI;
 
 public class ParaUI extends UI {
@@ -41,11 +40,11 @@ public class ParaUI extends UI {
 		this.txtISBN.setText("");
 		this.txtPaginas.setText("");
 		this.txtTitulo.setText("");
+		this.comboTema.setSelectedIndex(0);
 		this.chkCartone.setSelected(false);
 		this.chkRustica.setSelected(false);
 		this.chkTapaDura.setSelected(false);
-		this.radialNovedad.setSelected(false);
-		this.radialReedicion.setSelected(false);
+		this.buttonGroup.clearSelection();
 	}
 
 	/**
@@ -84,6 +83,7 @@ public class ParaUI extends UI {
 			Libro libro = this.almacenamiento.getLibros()[posicion];
 			this.txtTitulo.setText(libro.getTitulo());
 			this.txtAutor.setText(libro.getAutor());
+			this.comboTema.setSelectedIndex(libro.getTema());
 			this.txtPaginas.setText(libro.getNumPaginas());
 			this.txtISBN.setText(libro.getIsbn());
 			this.chkCartone.setSelected(libro.isCartone());
@@ -122,6 +122,10 @@ public class ParaUI extends UI {
 		this.actualizarLista();
 		this.limpiarPantalla();
 	}
+
+	/*
+	 * MÉTODOS DE TABLA.
+	 */
 
 	/**
 	 * Método de la tabla. Inserta un libro en la tabla.
@@ -163,6 +167,10 @@ public class ParaUI extends UI {
 			}
 		};
 	}
+
+	/*
+	 * GETTERS / SETTERS
+	 */
 
 	public Estanteria getAlmacenamiento() {
 		return this.almacenamiento;

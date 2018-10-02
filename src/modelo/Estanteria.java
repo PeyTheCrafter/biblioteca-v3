@@ -6,7 +6,14 @@ public class Estanteria {
 	public Estanteria(int tamano) {
 		this.libros = new Libro[tamano];
 	}
-	
+
+	public static void main(String[] args) {
+		Estanteria es = new Estanteria(10);
+		es.insertarLibro(new Libro("Uno", "1"));
+		System.out.println(es.posicionLibroISBN("1"));
+		es.borrarLibroISBN("1");
+	}
+
 	/**
 	 * PROPIO. Busca el primer hueco libre que haya.
 	 * 
@@ -19,6 +26,32 @@ public class Estanteria {
 			}
 		}
 		return -1;
+	}
+
+	/**
+	 * Obtiene el libro en la posición
+	 * 
+	 * @param posicion
+	 *            la posición.
+	 * @return el libro si lo ha encontrado, null si no.
+	 */
+	public Libro obtenerLibro(int posicion) {
+		return this.getLibros()[posicion];
+	}
+
+	/**
+	 * PROPORCIONADO. Inserta un libro en el array.
+	 * 
+	 * @param libro:
+	 *            el libro a insertar.
+	 * @return true si lo ha guardado, false si no.
+	 */
+	public boolean insertarLibro(Libro libro) {
+		int indice = this.buscarIndice();
+		if (indice != -1 && !this.comprobarISBNRepetido(libro.getIsbn())) {
+			this.libros[indice] = libro;
+		}
+		return this.libros[indice] != null;
 	}
 	
 	/**
@@ -37,7 +70,7 @@ public class Estanteria {
 		}
 		return -1;
 	}
-	
+
 	/**
 	 * PROPIO. Busca la posición del un libro por su ISBN.
 	 * 
@@ -47,17 +80,33 @@ public class Estanteria {
 	 */
 	public int posicionLibroISBN(String isbn) {
 		for (int i = 0; i < this.getLibros().length; i++) {
-			if (this.getLibros()[i] != null
-					&& this.getLibros()[i].getTitulo().toLowerCase().equals(isbn.toLowerCase())) {
+			if (this.getLibros()[i] != null && this.getLibros()[i].getIsbn().toLowerCase().equals(isbn.toLowerCase())) {
 				return i;
 			}
 		}
 		return -1;
 	}
-	
+
+	/**
+	 * Obtiene la posición de un libro por su nombre.
+	 * @param nombre nombre del libro a buscar.
+	 * @return la posición si lo encuentra, -1 si no.
+	 */
+	public int posicionLibroNombre(String nombre) {
+		for (int i = 0; i < this.getLibros().length; i++) {
+			if (this.getLibros()[i] != null
+					&& this.getLibros()[i].getTitulo().toLowerCase().equals(nombre.toLowerCase())) {
+				return i;
+			}
+		}
+		return -1;
+	}
+
 	/**
 	 * Borra la posición.
-	 * @param indice la posición a borrar.
+	 * 
+	 * @param indice
+	 *            la posición a borrar.
 	 * @return true si se ha borrado, false si no.
 	 */
 	public boolean borrarLibroPosicion(int indice) {
@@ -69,6 +118,20 @@ public class Estanteria {
 			return this.getLibros()[indice] == null;
 		}
 		return false;
+	}
+
+	/**
+	 * PROPIO. Borra un libro por su ISBN.
+	 * 
+	 * @param nombre:
+	 *            el ISBN del libro.
+	 * @return true si lo borra, false si no.
+	 */
+	public boolean borrarLibroISBN(String isbn) {
+		int indice = this.posicionLibroISBN(isbn);
+		System.out.println(indice);
+		this.libros[indice] = null;
+		return this.libros[indice] == null;
 	}
 	
 	/**
@@ -85,35 +148,6 @@ public class Estanteria {
 			}
 		}
 		return false;
-	}
-	
-	/**
-	 * PROPORCIONADO. Inserta un libro en el array.
-	 * 
-	 * @param libro:
-	 *            el libro a insertar.
-	 * @return true si lo ha guardado, false si no.
-	 */
-	public boolean insertarLibro(Libro libro) {
-		int indice = this.buscarIndice();
-		if (indice != -1 && !this.comprobarISBNRepetido(libro.getIsbn())) {
-			this.libros[indice] = libro;
-		}
-		return this.libros[indice] != null;
-	}
-	
-	/**
-	 * PROPIO. Borra un libro por su ISBN.
-	 * 
-	 * @param nombre:
-	 *            el ISBN del libro.
-	 * @return true si lo borra, false si no.
-	 */
-	public boolean borrarLibroISBN(String isbn) {
-		int indice = this.posicionLibroISBN(isbn);
-		System.out.println(indice);
-		this.libros[indice] = null;
-		return this.libros[indice] == null;
 	}
 
 	public Libro[] getLibros() {

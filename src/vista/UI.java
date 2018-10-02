@@ -6,31 +6,24 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
-import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
-
 import java.awt.Font;
 import java.awt.Panel;
-import java.util.Vector;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import javax.swing.JTextField;
-import javax.swing.JComboBox;
 import javax.swing.JCheckBox;
 import javax.swing.JRadioButton;
 import javax.swing.border.TitledBorder;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
 import javax.swing.JButton;
-import javax.swing.JList;
 import java.awt.Color;
 import javax.swing.JTable;
 import javax.swing.JScrollPane;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import javax.swing.ListSelectionModel;
 import javax.swing.ButtonGroup;
+import javax.swing.JComboBox;
+import javax.swing.DefaultComboBoxModel;
+import modelo.Temas;
 
 public class UI extends JFrame {
 
@@ -39,7 +32,6 @@ public class UI extends JFrame {
 	protected JTextField txtAutor;
 	protected JTextField txtPaginas;
 	protected JTextField txtISBN;
-	protected JComboBox comboTema;
 	protected JButton btnNuevo;
 	protected JButton btnAlta;
 	protected JButton btnBaja;
@@ -50,21 +42,27 @@ public class UI extends JFrame {
 	protected JRadioButton radialReedicion;
 	protected JTable listaLibros;
 	protected JTable table;
-	private JScrollPane scrollPane;
-	private final ButtonGroup buttonGroup = new ButtonGroup();
+	protected JScrollPane scrollPane;
+	protected final ButtonGroup buttonGroup = new ButtonGroup();
+	protected Panel panelPrincipal;
+	protected JPanel panelDatos;
+	protected JLabel lblLibreriaTitulo;
+	protected JPanel panelBotones;
+	protected JPanel panelFormato;
+	protected JPanel panelEstado;
+	protected JComboBox<Temas> comboTema;
 
 	/**
 	 * Create the frame.
 	 */
 	public UI() {
-		setResizable(false);
-		try {
-			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException
-				| UnsupportedLookAndFeelException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+//		try {
+//			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+//		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException
+//				| UnsupportedLookAndFeelException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 455, 589);
 		contentPane = new JPanel();
@@ -73,12 +71,12 @@ public class UI extends JFrame {
 		contentPane.setLayout(new BorderLayout(0, 0));
 		setContentPane(contentPane);
 
-		JLabel lblLibreriaTitulo = new JLabel("Librer\u00EDa");
+		lblLibreriaTitulo = new JLabel("Librer\u00EDa");
 		lblLibreriaTitulo.setFont(new Font("Rockwell", Font.BOLD | Font.ITALIC, 26));
 		lblLibreriaTitulo.setHorizontalAlignment(SwingConstants.CENTER);
 		contentPane.add(lblLibreriaTitulo, BorderLayout.NORTH);
 
-		Panel panelPrincipal = new Panel();
+		panelPrincipal = new Panel();
 		contentPane.add(panelPrincipal, BorderLayout.CENTER);
 		GridBagLayout gbl_panelPrincipal = new GridBagLayout();
 		gbl_panelPrincipal.columnWidths = new int[] { 30, 0, 100, 0, 0, 30, 0 };
@@ -87,7 +85,7 @@ public class UI extends JFrame {
 		gbl_panelPrincipal.rowWeights = new double[] { 0.0, 0.0, 1.0, 0.0, Double.MIN_VALUE };
 		panelPrincipal.setLayout(gbl_panelPrincipal);
 
-		JPanel panelDatos = new JPanel();
+		panelDatos = new JPanel();
 		panelDatos.setBackground(new Color(51, 102, 102));
 		GridBagConstraints gbc_panelDatos = new GridBagConstraints();
 		gbc_panelDatos.gridwidth = 3;
@@ -146,12 +144,12 @@ public class UI extends JFrame {
 		gbc_lblTema.gridx = 0;
 		gbc_lblTema.gridy = 2;
 		panelDatos.add(lblTema, gbc_lblTema);
-
+		
 		comboTema = new JComboBox();
-		comboTema.setBackground(Color.LIGHT_GRAY);
+		comboTema.setModel(new DefaultComboBoxModel(Temas.values()));
 		GridBagConstraints gbc_comboTema = new GridBagConstraints();
-		gbc_comboTema.fill = GridBagConstraints.HORIZONTAL;
 		gbc_comboTema.insets = new Insets(0, 0, 5, 0);
+		gbc_comboTema.fill = GridBagConstraints.HORIZONTAL;
 		gbc_comboTema.gridx = 1;
 		gbc_comboTema.gridy = 2;
 		panelDatos.add(comboTema, gbc_comboTema);
@@ -191,7 +189,7 @@ public class UI extends JFrame {
 		panelDatos.add(txtISBN, gbc_txtISBN);
 		txtISBN.setColumns(10);
 
-		JPanel panelBotones = new JPanel();
+		panelBotones = new JPanel();
 		panelBotones.setBackground(new Color(51, 102, 102));
 		GridBagConstraints gbc_panelBotones = new GridBagConstraints();
 		gbc_panelBotones.insets = new Insets(0, 0, 5, 5);
@@ -229,7 +227,7 @@ public class UI extends JFrame {
 		gbc_btnBaja.gridy = 2;
 		panelBotones.add(btnBaja, gbc_btnBaja);
 
-		JPanel panelFormato = new JPanel();
+		panelFormato = new JPanel();
 		panelFormato.setBackground(new Color(51, 102, 102));
 		panelFormato.setBorder(new TitledBorder(null, "Formato", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		GridBagConstraints gbc_panelFormato = new GridBagConstraints();
@@ -271,7 +269,7 @@ public class UI extends JFrame {
 		gbc_chkTapaDura.gridy = 2;
 		panelFormato.add(chkTapaDura, gbc_chkTapaDura);
 
-		JPanel panelEstado = new JPanel();
+		panelEstado = new JPanel();
 		panelEstado.setBackground(new Color(51, 102, 102));
 		panelEstado.setBorder(new TitledBorder(null, "Estado", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		GridBagConstraints gbc_panelEstado = new GridBagConstraints();
