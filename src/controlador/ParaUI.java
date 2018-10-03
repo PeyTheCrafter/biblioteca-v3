@@ -14,8 +14,7 @@ import vista.UI;
 
 public class ParaUI extends UI {
 	private Estanteria almacenamiento;
-	private static int TAMANO = 10;
-	private GestorAvisos ga = new GestorAvisos(this);
+	private static int TAMANO = 3;
 	public GestorBotones botones = new GestorBotones(this);
 
 	public ParaUI() {
@@ -101,37 +100,6 @@ public class ParaUI extends UI {
 		}
 	}
 
-	/**
-	 * Guarda un libro en el array.
-	 */
-	public void insertarLibro() {
-		Libro libro = new Libro(this.txtTitulo.getText(), this.txtAutor.getText(), this.comboTema.getSelectedIndex(),
-				this.txtPaginas.getText(), this.txtISBN.getText(), this.chkCartone.isSelected(),
-				this.chkRustica.isSelected(), this.chkTapaDura.isSelected(), this.radialNovedad.isSelected());
-		boolean respuesta = this.almacenamiento.insertarLibro(libro);
-		if (!respuesta) {
-			this.ga.error("Error al añadir el libro:", "Error de inserción");
-		} else {
-			this.insertarTable(libro);
-			this.ga.informacion("Libro añadido.", "Información");
-		}
-	}
-
-	/**
-	 * Borra un libro a partir del que está seleccionado en la tabla.
-	 */
-	public void borrarLibro() {
-		String isbn = this.getSeleccionado();
-		int posicion = this.almacenamiento.posicionLibroISBN(isbn);
-		if (!this.almacenamiento.borrarLibroPosicion(posicion)) {
-			this.ga.error("Error al borrar.", "Error de borrado");
-		} else {
-			this.ga.informacion("Libro borrado.", "información");
-		}
-		this.actualizarLista();
-		this.limpiarPantalla();
-	}
-
 	/*
 	 * MÉTODOS DE TABLA.
 	 */
@@ -142,7 +110,7 @@ public class ParaUI extends UI {
 	 * @param libro
 	 *            el libro para extraer los datos e introducirlos en la tabla.
 	 */
-	private void insertarTable(Libro libro) {
+	public void insertarTable(Libro libro) {
 		if (libro != null) {
 			DefaultTableModel modelo = (DefaultTableModel) this.table.getModel();
 			modelo.addRow(introducirRejilla(libro));
@@ -167,7 +135,7 @@ public class ParaUI extends UI {
 	 * @return un modelo vacío para la tabla.
 	 */
 	private TableModel getModel() {
-		return new DefaultTableModel(new Object[][] {}, new String[] { "Titulo", "Autor" }) {
+		return new DefaultTableModel(new Object[][] {}, new String[] { "Titulo", "ISBN" }) {
 			private static final long serialVersionUID = 1L;
 			boolean[] columnEditables = new boolean[] { false, false };
 

@@ -1,9 +1,5 @@
 package utiles;
 
-import java.awt.Component;
-
-import javax.swing.JButton;
-
 import controlador.ParaUI;
 
 public class GestorBotones {
@@ -20,31 +16,67 @@ public class GestorBotones {
 		this.radial(state);
 		this.combo(state);
 	}
+	
+	public void txt(boolean state) {
+		this.txtTitulo(state);
+		this.txtAutor(state);
+		this.txtPaginas(state);
+		this.txtIsbn(state);
+	}
 
 	public void combo(boolean state) {
 		this.paraUI.getComboTema().setEnabled(state);
 	}
 
 	public void btn(boolean state) {
-		this.paraUI.getBtnAlta().setEnabled(state);
-		this.paraUI.getBtnBaja().setEnabled(state);
+		this.btnAlta(state);
+		this.btnBaja(state);
 	}
-
+	
 	public void chk(boolean state) {
-		this.paraUI.getChkCartone().setEnabled(state);
-		this.paraUI.getChkRustica().setEnabled(state);
-		this.paraUI.getChkTapaDura().setEnabled(state);
+		this.chkcartone(state);
+		this.chkRustica(state);
+		this.chkTapaDura(state);
 	}
-
+	
 	public void radial(boolean state) {
 		this.paraUI.getRadialNovedad().setEnabled(state);
 		this.paraUI.getRadialReedicion().setEnabled(state);
 	}
 
-	public void txt(boolean state) {
-		this.paraUI.getTxtTitulo().setEditable(state);
-		this.paraUI.getTxtAutor().setEditable(state);
-		this.paraUI.getTxtPaginas().setEditable(state);
+	public void btnAlta(boolean state) {
+		this.paraUI.getBtnAlta().setEnabled(state);
+	}
+
+	public void btnBaja(boolean state) {
+		this.paraUI.getBtnBaja().setEnabled(state);
+	}
+
+	public void chkTapaDura(boolean state) {
+		this.paraUI.getChkTapaDura().setEnabled(state);
+	}
+
+	public void chkRustica(boolean state) {
+		this.paraUI.getChkRustica().setEnabled(state);
+	}
+
+	public void chkcartone(boolean state) {
+		this.paraUI.getChkCartone().setEnabled(state);
+	}
+
+	public void txtIsbn(boolean state) {
 		this.paraUI.getTxtISBN().setEditable(state);
+	}
+
+	public void txtPaginas(boolean state) {
+		this.paraUI.getTxtPaginas().setEditable(state);
+	}
+
+	public void txtAutor(boolean state) {
+		this.paraUI.getTxtAutor().setEditable(state);
+	}
+
+	public void txtTitulo(boolean state) {
+		this.paraUI.getTxtTitulo().setEditable(state);
 	}
 }

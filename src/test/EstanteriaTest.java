@@ -52,7 +52,7 @@ public class EstanteriaTest {
 		es.insertarLibro(new Libro("Cuatro", "4"));
 		es.insertarLibro(new Libro("Cinco", "5"));
 		es.
-		assertEquals(1, es.buscarIndice());
+		assertEquals(1, es.buscarEspacio());
 	}
 
 	@Ignore

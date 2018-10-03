@@ -19,6 +19,7 @@ public class EventoTabla implements MouseListener {
 	@Override
 	public void mouseClicked(java.awt.event.MouseEvent e) {
 		this.paraUI.mostrarDatos();
+		this.paraUI.botones.btnBaja(true);
 	}
 
 	@Override
@@ -29,7 +30,6 @@ public class EventoTabla implements MouseListener {
 
 	@Override
 	public void mouseExited(java.awt.event.MouseEvent e) {
-		// TODO Auto-generated method stub
 
 	}
 

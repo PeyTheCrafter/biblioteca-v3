@@ -8,11 +8,30 @@ public class Estanteria {
 	}
 
 	/**
+	 * Calcula el tamaño del array.
+	 * 
+	 * @return
+	 */
+	public int getTamano() {
+		return this.libros.length;
+	}
+
+	public int getUsoMemoria() {
+		int contador = 0;
+		for (Libro libro : libros) {
+			if (libro != null) {
+				contador++;
+			}
+		}
+		return contador;
+	}
+
+	/**
 	 * PROPIO. Busca el primer hueco libre que haya.
 	 * 
 	 * @return el índice del hueco encontrado.
 	 */
-	public int buscarIndice() {
+	public int buscarEspacio() {
 		for (int i = 0; i < this.libros.length; i++) {
 			if (this.libros[i] == null) {
 				return i;
@@ -22,7 +41,7 @@ public class Estanteria {
 	}
 
 	/**
-	 * Obtiene el libro en la posición
+	 * Obtiene el libro en la posición.
 	 * 
 	 * @param posicion
 	 *            la posición.
@@ -40,13 +59,15 @@ public class Estanteria {
 	 * @return true si lo ha guardado, false si no.
 	 */
 	public boolean insertarLibro(Libro libro) {
-		int indice = this.buscarIndice();
+		int indice = this.buscarEspacio();
 		if (indice != -1 && !this.comprobarISBNRepetido(libro.getIsbn())) {
 			this.libros[indice] = libro;
+			return this.libros[indice] != null;
+		} else {
+			return false;
 		}
-		return this.libros[indice] != null;
 	}
-	
+
 	/**
 	 * PROPORCIONADO. Busca la posición del un libro por su nombre.
 	 * 
@@ -82,7 +103,9 @@ public class Estanteria {
 
 	/**
 	 * Obtiene la posición de un libro por su nombre.
-	 * @param nombre nombre del libro a buscar.
+	 * 
+	 * @param nombre
+	 *            nombre del libro a buscar.
 	 * @return la posición si lo encuentra, -1 si no.
 	 */
 	public int posicionLibroNombre(String nombre) {
@@ -126,7 +149,7 @@ public class Estanteria {
 		this.libros[indice] = null;
 		return this.libros[indice] == null;
 	}
-	
+
 	/**
 	 * PROPIO. Comprueba si el ISBN del libro está repetido.
 	 * 
