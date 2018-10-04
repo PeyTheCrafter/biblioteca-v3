@@ -65,7 +65,7 @@ public class GestorBotones {
 	}
 
 	public void txtIsbn(boolean state) {
-		this.paraUI.getTxtISBN().setEditable(state);
+		this.paraUI.getTxtIsbn().setEditable(state);
 	}
 
 	public void txtPaginas(boolean state) {

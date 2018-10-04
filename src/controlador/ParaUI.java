@@ -1,7 +1,11 @@
 package controlador;
 
+import java.awt.Color;
+import java.awt.Component;
+
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
@@ -20,9 +24,9 @@ public class ParaUI extends UI {
 	public ParaUI() {
 		super();
 		this.almacenamiento = new Estanteria(this.TAMANO);
+		this.getTable().setModel(this.getModel());
 		this.asignarEventos();
-		this.actualizarLista();
-		this.table.setModel(this.getModel());
+		this.botones.global(false);
 	}
 
 	/**
@@ -40,7 +44,7 @@ public class ParaUI extends UI {
 	 */
 	public void limpiarPantalla() {
 		this.txtAutor.setText("");
-		this.txtISBN.setText("");
+		this.txtIsbn.setText("");
 		this.txtPaginas.setText("");
 		this.txtTitulo.setText("");
 		this.comboTema.setSelectedIndex(0);
@@ -56,7 +60,7 @@ public class ParaUI extends UI {
 	public void actualizarLista() {
 		this.table.setModel(this.getModel());
 		for (int i = 0; i < this.TAMANO; i++) {
-			this.insertarTable(this.almacenamiento.getLibros()[i]);
+			this.insertarTable(this.almacenamiento.obtenerLibro(i));
 		}
 	}
 
@@ -88,7 +92,7 @@ public class ParaUI extends UI {
 			this.txtAutor.setText(libro.getAutor());
 			this.comboTema.setSelectedIndex(libro.getTema());
 			this.txtPaginas.setText(libro.getNumPaginas());
-			this.txtISBN.setText(libro.getIsbn());
+			this.txtIsbn.setText(libro.getIsbn());
 			this.chkCartone.setSelected(libro.isCartone());
 			this.chkRustica.setSelected(libro.isRustico());
 			this.chkTapaDura.setSelected(libro.isTapaDura());

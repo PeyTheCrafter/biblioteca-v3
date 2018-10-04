@@ -1,60 +1,47 @@
 package vista;
 
-import java.awt.BorderLayout;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
-import javax.swing.SwingConstants;
-import java.awt.Font;
-import java.awt.Panel;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseMotionListener;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import javax.swing.JTextField;
+import javax.swing.UIManager;
 import javax.swing.JCheckBox;
 import javax.swing.JRadioButton;
 import javax.swing.border.TitledBorder;
 import javax.swing.JButton;
 import java.awt.Color;
 import javax.swing.JTable;
-import javax.swing.JScrollPane;
-import javax.swing.ListSelectionModel;
 import javax.swing.ButtonGroup;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import modelo.Temas;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.border.LineBorder;
+import java.awt.Font;
 
 public class UI extends JFrame {
 
 	protected JPanel contentPane;
 	protected JTextField txtTitulo;
 	protected JTextField txtAutor;
+	protected JTextField txtIsbn;
 	protected JTextField txtPaginas;
-	protected JTextField txtISBN;
-	protected JButton btnNuevo;
-	protected JButton btnAlta;
-	protected JButton btnBaja;
+	protected final ButtonGroup buttonGroup = new ButtonGroup();
+	protected final ButtonGroup buttonGroup_1 = new ButtonGroup();
+	protected JTable table;
+	protected JComboBox comboTema;
 	protected JCheckBox chkCartone;
 	protected JCheckBox chkRustica;
 	protected JCheckBox chkTapaDura;
 	protected JRadioButton radialNovedad;
 	protected JRadioButton radialReedicion;
-	protected JTable listaLibros;
-	protected JTable table;
-	protected JScrollPane scrollPane;
-	protected final ButtonGroup buttonGroup = new ButtonGroup();
-	protected Panel panelPrincipal;
-	protected JPanel panelDatos;
-	protected JLabel lblLibreriaTitulo;
-	protected JPanel panelBotones;
-	protected JPanel panelFormato;
-	protected JPanel panelEstado;
-	protected JComboBox<Temas> comboTema;
+	protected JButton btnAlta;
+	protected JButton btnBaja;
+	protected JButton btnNuevo;
 
 	/**
 	 * Create the frame.
@@ -69,272 +56,325 @@ public class UI extends JFrame {
 		// e.printStackTrace();
 		// }
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 455, 589);
+		setBounds(100, 100, 860, 450);
 		contentPane = new JPanel();
-		contentPane.setBackground(new Color(51, 102, 102));
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		contentPane.setLayout(new BorderLayout(0, 0));
+		contentPane.setFont(new Font("Tahoma", Font.BOLD, 11));
+		contentPane.setBackground(new Color(204, 204, 204));
+		contentPane.setBorder(new EmptyBorder(15, 15, 15, 15));
 		setContentPane(contentPane);
-
-		lblLibreriaTitulo = new JLabel("Librer\u00EDa");
-		lblLibreriaTitulo.setFont(new Font("Rockwell", Font.BOLD | Font.ITALIC, 26));
-		lblLibreriaTitulo.setHorizontalAlignment(SwingConstants.CENTER);
-		contentPane.add(lblLibreriaTitulo, BorderLayout.NORTH);
-
-		panelPrincipal = new Panel();
-		contentPane.add(panelPrincipal, BorderLayout.CENTER);
-		GridBagLayout gbl_panelPrincipal = new GridBagLayout();
-		gbl_panelPrincipal.columnWidths = new int[] { 30, 0, 100, 0, 0, 30, 0 };
-		gbl_panelPrincipal.rowHeights = new int[] { 0, 0, 0, 0, 0 };
-		gbl_panelPrincipal.columnWeights = new double[] { 0.0, 1.0, 0.0, 1.0, 0.0, 0.0, Double.MIN_VALUE };
-		gbl_panelPrincipal.rowWeights = new double[] { 0.0, 0.0, 1.0, 0.0, Double.MIN_VALUE };
-		panelPrincipal.setLayout(gbl_panelPrincipal);
-
-		panelDatos = new JPanel();
-		panelDatos.setRequestFocusEnabled(false);
-		panelDatos.setBackground(new Color(51, 102, 102));
+		GridBagLayout gbl_contentPane = new GridBagLayout();
+		gbl_contentPane.columnWidths = new int[]{0, 0, 0, 266, 0, 0};
+		gbl_contentPane.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0};
+		gbl_contentPane.columnWeights = new double[]{0.0, 1.0, 0.0, 1.0, 0.0, Double.MIN_VALUE};
+		gbl_contentPane.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 1.0, 0.0, Double.MIN_VALUE};
+		contentPane.setLayout(gbl_contentPane);
+		
+		JPanel panelDatos = new JPanel();
+		panelDatos.setOpaque(false);
+		panelDatos.setBackground(new Color(204, 153, 0));
+		panelDatos.setForeground(new Color(0, 0, 0));
 		GridBagConstraints gbc_panelDatos = new GridBagConstraints();
-		gbc_panelDatos.gridwidth = 3;
 		gbc_panelDatos.insets = new Insets(0, 0, 5, 5);
 		gbc_panelDatos.fill = GridBagConstraints.BOTH;
 		gbc_panelDatos.gridx = 1;
-		gbc_panelDatos.gridy = 0;
-		panelPrincipal.add(panelDatos, gbc_panelDatos);
+		gbc_panelDatos.gridy = 1;
+		contentPane.add(panelDatos, gbc_panelDatos);
 		GridBagLayout gbl_panelDatos = new GridBagLayout();
-		gbl_panelDatos.columnWidths = new int[] { 0, 0, 0 };
-		gbl_panelDatos.rowHeights = new int[] { 0, 0, 0, 0, 0, 0 };
-		gbl_panelDatos.columnWeights = new double[] { 0.0, 1.0, Double.MIN_VALUE };
-		gbl_panelDatos.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE };
+		gbl_panelDatos.columnWidths = new int[]{0, 0, 0, 0, 0};
+		gbl_panelDatos.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0};
+		gbl_panelDatos.columnWeights = new double[]{0.0, 0.0, 1.0, 0.0, Double.MIN_VALUE};
+		gbl_panelDatos.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		panelDatos.setLayout(gbl_panelDatos);
-
+		
 		JLabel lblTtulo = new JLabel("T\u00EDtulo");
+		lblTtulo.setForeground(new Color(0, 0, 0));
+		lblTtulo.setFont(new Font("Tahoma", Font.BOLD, 16));
 		GridBagConstraints gbc_lblTtulo = new GridBagConstraints();
-		gbc_lblTtulo.anchor = GridBagConstraints.EAST;
 		gbc_lblTtulo.insets = new Insets(0, 0, 5, 5);
-		gbc_lblTtulo.gridx = 0;
+		gbc_lblTtulo.gridx = 1;
 		gbc_lblTtulo.gridy = 0;
 		panelDatos.add(lblTtulo, gbc_lblTtulo);
-
+		
 		txtTitulo = new JTextField();
-		txtTitulo.setEditable(false);
-		txtTitulo.setBackground(Color.LIGHT_GRAY);
+		txtTitulo.setDisabledTextColor(new Color(0, 0, 0));
+		txtTitulo.setFont(new Font("Tahoma", Font.BOLD, 16));
+		txtTitulo.setForeground(new Color(0, 0, 0));
+		txtTitulo.setBorder(new LineBorder(new Color(255, 255, 255)));
+		txtTitulo.setBackground(new Color(255, 255, 255));
 		GridBagConstraints gbc_txtTitulo = new GridBagConstraints();
 		gbc_txtTitulo.fill = GridBagConstraints.HORIZONTAL;
-		gbc_txtTitulo.insets = new Insets(0, 0, 5, 0);
-		gbc_txtTitulo.gridx = 1;
+		gbc_txtTitulo.insets = new Insets(0, 0, 5, 5);
+		gbc_txtTitulo.gridx = 2;
 		gbc_txtTitulo.gridy = 0;
 		panelDatos.add(txtTitulo, gbc_txtTitulo);
 		txtTitulo.setColumns(10);
-
+		
 		JLabel lblAutor = new JLabel("Autor");
+		lblAutor.setForeground(new Color(0, 0, 0));
+		lblAutor.setFont(new Font("Tahoma", Font.BOLD, 16));
 		GridBagConstraints gbc_lblAutor = new GridBagConstraints();
-		gbc_lblAutor.anchor = GridBagConstraints.EAST;
 		gbc_lblAutor.insets = new Insets(0, 0, 5, 5);
-		gbc_lblAutor.gridx = 0;
+		gbc_lblAutor.gridx = 1;
 		gbc_lblAutor.gridy = 1;
 		panelDatos.add(lblAutor, gbc_lblAutor);
-
+		
 		txtAutor = new JTextField();
-		txtAutor.setEditable(false);
-		txtAutor.setBackground(Color.LIGHT_GRAY);
-		GridBagConstraints gbc_txtAutor = new GridBagConstraints();
-		gbc_txtAutor.fill = GridBagConstraints.HORIZONTAL;
-		gbc_txtAutor.insets = new Insets(0, 0, 5, 0);
-		gbc_txtAutor.gridx = 1;
-		gbc_txtAutor.gridy = 1;
-		panelDatos.add(txtAutor, gbc_txtAutor);
+		txtAutor.setDisabledTextColor(new Color(0, 0, 0));
+		txtAutor.setFont(new Font("Tahoma", Font.BOLD, 16));
+		txtAutor.setForeground(new Color(0, 0, 0));
+		txtAutor.setBorder(new LineBorder(new Color(255, 255, 255)));
+		txtAutor.setBackground(new Color(255, 255, 255));
+		GridBagConstraints gbc_txtAUtor = new GridBagConstraints();
+		gbc_txtAUtor.fill = GridBagConstraints.HORIZONTAL;
+		gbc_txtAUtor.insets = new Insets(0, 0, 5, 5);
+		gbc_txtAUtor.gridx = 2;
+		gbc_txtAUtor.gridy = 1;
+		panelDatos.add(txtAutor, gbc_txtAUtor);
 		txtAutor.setColumns(10);
-
+		
 		JLabel lblTema = new JLabel("Tema");
+		lblTema.setForeground(new Color(0, 0, 0));
+		lblTema.setFont(new Font("Tahoma", Font.BOLD, 16));
 		GridBagConstraints gbc_lblTema = new GridBagConstraints();
-		gbc_lblTema.anchor = GridBagConstraints.EAST;
 		gbc_lblTema.insets = new Insets(0, 0, 5, 5);
-		gbc_lblTema.gridx = 0;
+		gbc_lblTema.gridx = 1;
 		gbc_lblTema.gridy = 2;
 		panelDatos.add(lblTema, gbc_lblTema);
-
+		
 		comboTema = new JComboBox();
-		comboTema.setEnabled(false);
-		GridBagConstraints gbc_comboTema = new GridBagConstraints();
-		gbc_comboTema.fill = GridBagConstraints.HORIZONTAL;
-		gbc_comboTema.insets = new Insets(0, 0, 5, 0);
-		gbc_comboTema.gridx = 1;
-		gbc_comboTema.gridy = 2;
-		panelDatos.add(comboTema, gbc_comboTema);
+		comboTema.setFont(new Font("Tahoma", Font.BOLD, 16));
+		comboTema.setForeground(new Color(0, 0, 0));
+		comboTema.setBorder(new LineBorder(new Color(0, 255, 255)));
+		comboTema.setBackground(new Color(255, 255, 255));
+		GridBagConstraints gbc_comboBox = new GridBagConstraints();
+		gbc_comboBox.fill = GridBagConstraints.HORIZONTAL;
+		gbc_comboBox.insets = new Insets(0, 0, 5, 5);
+		gbc_comboBox.gridx = 2;
+		gbc_comboBox.gridy = 2;
+		panelDatos.add(comboTema, gbc_comboBox);
 		comboTema.setModel(new DefaultComboBoxModel(Temas.values()));
-
+		
+		JLabel lblIsbn = new JLabel("ISBN");
+		lblIsbn.setForeground(new Color(0, 0, 0));
+		lblIsbn.setFont(new Font("Tahoma", Font.BOLD, 16));
+		GridBagConstraints gbc_lblIsbn = new GridBagConstraints();
+		gbc_lblIsbn.insets = new Insets(0, 0, 5, 5);
+		gbc_lblIsbn.gridx = 1;
+		gbc_lblIsbn.gridy = 3;
+		panelDatos.add(lblIsbn, gbc_lblIsbn);
+		
+		txtIsbn = new JTextField();
+		txtIsbn.setDisabledTextColor(new Color(0, 0, 0));
+		txtIsbn.setFont(new Font("Tahoma", Font.BOLD, 16));
+		txtIsbn.setForeground(new Color(0, 0, 0));
+		txtIsbn.setBorder(new LineBorder(new Color(255, 255, 255)));
+		txtIsbn.setBackground(new Color(255, 255, 255));
+		GridBagConstraints gbc_txtIsbn = new GridBagConstraints();
+		gbc_txtIsbn.fill = GridBagConstraints.HORIZONTAL;
+		gbc_txtIsbn.insets = new Insets(0, 0, 5, 5);
+		gbc_txtIsbn.gridx = 2;
+		gbc_txtIsbn.gridy = 3;
+		panelDatos.add(txtIsbn, gbc_txtIsbn);
+		txtIsbn.setColumns(10);
+		
 		JLabel lblPginas = new JLabel("P\u00E1ginas");
+		lblPginas.setForeground(new Color(0, 0, 0));
+		lblPginas.setFont(new Font("Tahoma", Font.BOLD, 16));
 		GridBagConstraints gbc_lblPginas = new GridBagConstraints();
-		gbc_lblPginas.anchor = GridBagConstraints.EAST;
 		gbc_lblPginas.insets = new Insets(0, 0, 5, 5);
-		gbc_lblPginas.gridx = 0;
-		gbc_lblPginas.gridy = 3;
+		gbc_lblPginas.gridx = 1;
+		gbc_lblPginas.gridy = 4;
 		panelDatos.add(lblPginas, gbc_lblPginas);
-
+		
 		txtPaginas = new JTextField();
-		txtPaginas.setEditable(false);
-		txtPaginas.setBackground(Color.LIGHT_GRAY);
+		txtPaginas.setDisabledTextColor(new Color(0, 0, 0));
+		txtPaginas.setFont(new Font("Tahoma", Font.BOLD, 16));
+		txtPaginas.setForeground(new Color(0, 0, 0));
+		txtPaginas.setBorder(new LineBorder(new Color(255, 255, 255)));
+		txtPaginas.setBackground(new Color(255, 255, 255));
 		GridBagConstraints gbc_txtPaginas = new GridBagConstraints();
+		gbc_txtPaginas.insets = new Insets(0, 0, 5, 5);
 		gbc_txtPaginas.fill = GridBagConstraints.HORIZONTAL;
-		gbc_txtPaginas.insets = new Insets(0, 0, 5, 0);
-		gbc_txtPaginas.gridx = 1;
-		gbc_txtPaginas.gridy = 3;
+		gbc_txtPaginas.gridx = 2;
+		gbc_txtPaginas.gridy = 4;
 		panelDatos.add(txtPaginas, gbc_txtPaginas);
 		txtPaginas.setColumns(10);
-
-		JLabel lblIsbn = new JLabel("ISBN");
-		GridBagConstraints gbc_lblIsbn = new GridBagConstraints();
-		gbc_lblIsbn.anchor = GridBagConstraints.EAST;
-		gbc_lblIsbn.insets = new Insets(0, 0, 0, 5);
-		gbc_lblIsbn.gridx = 0;
-		gbc_lblIsbn.gridy = 4;
-		panelDatos.add(lblIsbn, gbc_lblIsbn);
-
-		txtISBN = new JTextField();
-		txtISBN.setEditable(false);
-		txtISBN.setBackground(Color.LIGHT_GRAY);
-		GridBagConstraints gbc_txtISBN = new GridBagConstraints();
-		gbc_txtISBN.fill = GridBagConstraints.HORIZONTAL;
-		gbc_txtISBN.gridx = 1;
-		gbc_txtISBN.gridy = 4;
-		panelDatos.add(txtISBN, gbc_txtISBN);
-		txtISBN.setColumns(10);
-
-		panelBotones = new JPanel();
-		panelBotones.setBackground(new Color(51, 102, 102));
-		GridBagConstraints gbc_panelBotones = new GridBagConstraints();
-		gbc_panelBotones.insets = new Insets(0, 0, 5, 5);
-		gbc_panelBotones.fill = GridBagConstraints.BOTH;
-		gbc_panelBotones.gridx = 4;
-		gbc_panelBotones.gridy = 0;
-		panelPrincipal.add(panelBotones, gbc_panelBotones);
-		GridBagLayout gbl_panelBotones = new GridBagLayout();
-		gbl_panelBotones.columnWidths = new int[] { 0, 0, 0 };
-		gbl_panelBotones.rowHeights = new int[] { 0, 0, 0, 0 };
-		gbl_panelBotones.columnWeights = new double[] { 1.0, 1.0, Double.MIN_VALUE };
-		gbl_panelBotones.rowWeights = new double[] { 1.0, 1.0, 1.0, Double.MIN_VALUE };
-		panelBotones.setLayout(gbl_panelBotones);
-
-		btnNuevo = new JButton("Nuevo");
-		GridBagConstraints gbc_btnNuevo = new GridBagConstraints();
-		gbc_btnNuevo.fill = GridBagConstraints.BOTH;
-		gbc_btnNuevo.insets = new Insets(0, 0, 5, 0);
-		gbc_btnNuevo.gridx = 1;
-		gbc_btnNuevo.gridy = 0;
-		panelBotones.add(btnNuevo, gbc_btnNuevo);
-
-		btnAlta = new JButton("Alta");
-		btnAlta.setEnabled(false);
-		GridBagConstraints gbc_btnAlta = new GridBagConstraints();
-		gbc_btnAlta.fill = GridBagConstraints.BOTH;
-		gbc_btnAlta.insets = new Insets(0, 0, 5, 0);
-		gbc_btnAlta.gridx = 1;
-		gbc_btnAlta.gridy = 1;
-		panelBotones.add(btnAlta, gbc_btnAlta);
-
-		btnBaja = new JButton("Baja");
-		btnBaja.setEnabled(false);
-		GridBagConstraints gbc_btnBaja = new GridBagConstraints();
-		gbc_btnBaja.fill = GridBagConstraints.BOTH;
-		gbc_btnBaja.gridx = 1;
-		gbc_btnBaja.gridy = 2;
-		panelBotones.add(btnBaja, gbc_btnBaja);
-
-		panelFormato = new JPanel();
-		panelFormato.setBackground(new Color(51, 102, 102));
-		panelFormato.setBorder(new TitledBorder(null, "Formato", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		GridBagConstraints gbc_panelFormato = new GridBagConstraints();
-		gbc_panelFormato.insets = new Insets(0, 0, 5, 5);
-		gbc_panelFormato.fill = GridBagConstraints.BOTH;
-		gbc_panelFormato.gridx = 1;
-		gbc_panelFormato.gridy = 1;
-		panelPrincipal.add(panelFormato, gbc_panelFormato);
-		GridBagLayout gbl_panelFormato = new GridBagLayout();
-		gbl_panelFormato.columnWidths = new int[] { 0, 0 };
-		gbl_panelFormato.rowHeights = new int[] { 0, 0, 0, 0 };
-		gbl_panelFormato.columnWeights = new double[] { 0.0, Double.MIN_VALUE };
-		gbl_panelFormato.rowWeights = new double[] { 1.0, 1.0, 1.0, Double.MIN_VALUE };
-		panelFormato.setLayout(gbl_panelFormato);
-
+		
+		table = new JTable();
+		table.setOpaque(false);
+		table.setFont(new Font("Tahoma", Font.BOLD, 16));
+		table.setBorder(new LineBorder(new Color(0, 0, 0)));
+		table.setBackground(new Color(255, 255, 255));
+		table.setForeground(new Color(0, 0, 0));
+		GridBagConstraints gbc_table = new GridBagConstraints();
+		gbc_table.gridheight = 4;
+		gbc_table.insets = new Insets(0, 0, 5, 5);
+		gbc_table.fill = GridBagConstraints.BOTH;
+		gbc_table.gridx = 3;
+		gbc_table.gridy = 1;
+		contentPane.add(table, gbc_table);
+		
+		JPanel panel = new JPanel();
+		panel.setOpaque(false);
+		panel.setBackground(new Color(102, 153, 153));
+		panel.setForeground(new Color(0, 0, 0));
+		GridBagConstraints gbc_panel = new GridBagConstraints();
+		gbc_panel.insets = new Insets(0, 0, 5, 5);
+		gbc_panel.fill = GridBagConstraints.BOTH;
+		gbc_panel.gridx = 1;
+		gbc_panel.gridy = 2;
+		contentPane.add(panel, gbc_panel);
+		GridBagLayout gbl_panel = new GridBagLayout();
+		gbl_panel.columnWidths = new int[]{0, 0, 0, 0, 0, 0};
+		gbl_panel.rowHeights = new int[]{0, 0};
+		gbl_panel.columnWeights = new double[]{1.0, 1.0, 1.0, 1.0, 1.0, Double.MIN_VALUE};
+		gbl_panel.rowWeights = new double[]{1.0, Double.MIN_VALUE};
+		panel.setLayout(gbl_panel);
+		
+		JPanel panel_1 = new JPanel();
+		panel_1.setOpaque(false);
+		panel_1.setBackground(new Color(204, 153, 0));
+		panel_1.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Formato", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
+		GridBagConstraints gbc_panel_1 = new GridBagConstraints();
+		gbc_panel_1.insets = new Insets(0, 0, 0, 5);
+		gbc_panel_1.fill = GridBagConstraints.BOTH;
+		gbc_panel_1.gridx = 1;
+		gbc_panel_1.gridy = 0;
+		panel.add(panel_1, gbc_panel_1);
+		GridBagLayout gbl_panel_1 = new GridBagLayout();
+		gbl_panel_1.columnWidths = new int[]{0, 0};
+		gbl_panel_1.rowHeights = new int[]{0, 0, 0, 0};
+		gbl_panel_1.columnWeights = new double[]{0.0, Double.MIN_VALUE};
+		gbl_panel_1.rowWeights = new double[]{0.0, 0.0, 0.0, Double.MIN_VALUE};
+		panel_1.setLayout(gbl_panel_1);
+		
 		chkCartone = new JCheckBox("Carton\u00E9");
-		chkCartone.setEnabled(false);
-		chkCartone.setBackground(new Color(51, 102, 102));
+		chkCartone.setForeground(new Color(0, 0, 0));
+		chkCartone.setOpaque(false);
+		chkCartone.setFont(new Font("Tahoma", Font.BOLD, 16));
+		chkCartone.setBackground(new Color(102, 153, 153));
 		GridBagConstraints gbc_chkCartone = new GridBagConstraints();
 		gbc_chkCartone.anchor = GridBagConstraints.WEST;
 		gbc_chkCartone.insets = new Insets(0, 0, 5, 0);
 		gbc_chkCartone.gridx = 0;
 		gbc_chkCartone.gridy = 0;
-		panelFormato.add(chkCartone, gbc_chkCartone);
-
+		panel_1.add(chkCartone, gbc_chkCartone);
+		
 		chkRustica = new JCheckBox("R\u00FAstica");
-		chkRustica.setEnabled(false);
-		chkRustica.setBackground(new Color(51, 102, 102));
+		chkRustica.setForeground(new Color(0, 0, 0));
+		chkRustica.setOpaque(false);
+		chkRustica.setFont(new Font("Tahoma", Font.BOLD, 16));
+		chkRustica.setBackground(new Color(102, 153, 153));
 		GridBagConstraints gbc_chkRustica = new GridBagConstraints();
 		gbc_chkRustica.anchor = GridBagConstraints.WEST;
 		gbc_chkRustica.insets = new Insets(0, 0, 5, 0);
 		gbc_chkRustica.gridx = 0;
 		gbc_chkRustica.gridy = 1;
-		panelFormato.add(chkRustica, gbc_chkRustica);
-
+		panel_1.add(chkRustica, gbc_chkRustica);
+		
 		chkTapaDura = new JCheckBox("Tapa dura");
-		chkTapaDura.setEnabled(false);
-		chkTapaDura.setBackground(new Color(51, 102, 102));
+		chkTapaDura.setForeground(new Color(0, 0, 0));
+		chkTapaDura.setOpaque(false);
+		chkTapaDura.setFont(new Font("Tahoma", Font.BOLD, 16));
+		chkTapaDura.setBackground(new Color(102, 153, 153));
 		GridBagConstraints gbc_chkTapaDura = new GridBagConstraints();
 		gbc_chkTapaDura.anchor = GridBagConstraints.WEST;
 		gbc_chkTapaDura.gridx = 0;
 		gbc_chkTapaDura.gridy = 2;
-		panelFormato.add(chkTapaDura, gbc_chkTapaDura);
-
-		panelEstado = new JPanel();
-		panelEstado.setBackground(new Color(51, 102, 102));
-		panelEstado.setBorder(new TitledBorder(null, "Estado", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		GridBagConstraints gbc_panelEstado = new GridBagConstraints();
-		gbc_panelEstado.insets = new Insets(0, 0, 5, 5);
-		gbc_panelEstado.fill = GridBagConstraints.BOTH;
-		gbc_panelEstado.gridx = 2;
-		gbc_panelEstado.gridy = 1;
-		panelPrincipal.add(panelEstado, gbc_panelEstado);
-		GridBagLayout gbl_panelEstado = new GridBagLayout();
-		gbl_panelEstado.columnWidths = new int[] { 0, 0 };
-		gbl_panelEstado.rowHeights = new int[] { 0, 0, 0 };
-		gbl_panelEstado.columnWeights = new double[] { 0.0, Double.MIN_VALUE };
-		gbl_panelEstado.rowWeights = new double[] { 1.0, 1.0, Double.MIN_VALUE };
-		panelEstado.setLayout(gbl_panelEstado);
-
+		panel_1.add(chkTapaDura, gbc_chkTapaDura);
+		
+		JPanel panel_2 = new JPanel();
+		panel_2.setOpaque(false);
+		panel_2.setBackground(new Color(204, 153, 0));
+		panel_2.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Estado", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
+		GridBagConstraints gbc_panel_2 = new GridBagConstraints();
+		gbc_panel_2.insets = new Insets(0, 0, 0, 5);
+		gbc_panel_2.fill = GridBagConstraints.BOTH;
+		gbc_panel_2.gridx = 3;
+		gbc_panel_2.gridy = 0;
+		panel.add(panel_2, gbc_panel_2);
+		GridBagLayout gbl_panel_2 = new GridBagLayout();
+		gbl_panel_2.columnWidths = new int[]{0, 0};
+		gbl_panel_2.rowHeights = new int[]{0, 0, 0};
+		gbl_panel_2.columnWeights = new double[]{0.0, Double.MIN_VALUE};
+		gbl_panel_2.rowWeights = new double[]{0.0, 0.0, Double.MIN_VALUE};
+		panel_2.setLayout(gbl_panel_2);
+		
 		radialNovedad = new JRadioButton("Novedad");
-		radialNovedad.setEnabled(false);
-		buttonGroup.add(radialNovedad);
-		radialNovedad.setBackground(new Color(51, 102, 102));
+		radialNovedad.setForeground(new Color(0, 0, 0));
+		radialNovedad.setOpaque(false);
+		radialNovedad.setFont(new Font("Tahoma", Font.BOLD, 16));
+		radialNovedad.setBackground(new Color(102, 153, 153));
+		buttonGroup_1.add(radialNovedad);
 		GridBagConstraints gbc_radialNovedad = new GridBagConstraints();
 		gbc_radialNovedad.anchor = GridBagConstraints.WEST;
 		gbc_radialNovedad.insets = new Insets(0, 0, 5, 0);
 		gbc_radialNovedad.gridx = 0;
 		gbc_radialNovedad.gridy = 0;
-		panelEstado.add(radialNovedad, gbc_radialNovedad);
-
+		panel_2.add(radialNovedad, gbc_radialNovedad);
+		
 		radialReedicion = new JRadioButton("Reedici\u00F3n");
-		radialReedicion.setEnabled(false);
-		buttonGroup.add(radialReedicion);
-		radialReedicion.setBackground(new Color(51, 102, 102));
+		radialReedicion.setForeground(new Color(0, 0, 0));
+		radialReedicion.setOpaque(false);
+		radialReedicion.setFont(new Font("Tahoma", Font.BOLD, 16));
+		radialReedicion.setBackground(new Color(102, 153, 153));
+		buttonGroup_1.add(radialReedicion);
 		GridBagConstraints gbc_radialReedicion = new GridBagConstraints();
 		gbc_radialReedicion.anchor = GridBagConstraints.WEST;
 		gbc_radialReedicion.gridx = 0;
 		gbc_radialReedicion.gridy = 1;
-		panelEstado.add(radialReedicion, gbc_radialReedicion);
-
-		scrollPane = new JScrollPane();
-		scrollPane.setBackground(Color.LIGHT_GRAY);
-		GridBagConstraints gbc_scrollPane = new GridBagConstraints();
-		gbc_scrollPane.gridwidth = 4;
-		gbc_scrollPane.insets = new Insets(0, 0, 5, 5);
-		gbc_scrollPane.fill = GridBagConstraints.BOTH;
-		gbc_scrollPane.gridx = 1;
-		gbc_scrollPane.gridy = 2;
-		panelPrincipal.add(scrollPane, gbc_scrollPane);
-		table = new JTable();
-		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		scrollPane.setViewportView(table);
-		table.setBackground(Color.LIGHT_GRAY);
+		panel_2.add(radialReedicion, gbc_radialReedicion);
+		
+		JPanel panel_3 = new JPanel();
+		panel_3.setOpaque(false);
+		panel_3.setBackground(new Color(102, 153, 153));
+		GridBagConstraints gbc_panel_3 = new GridBagConstraints();
+		gbc_panel_3.insets = new Insets(0, 0, 5, 5);
+		gbc_panel_3.fill = GridBagConstraints.VERTICAL;
+		gbc_panel_3.gridx = 1;
+		gbc_panel_3.gridy = 3;
+		contentPane.add(panel_3, gbc_panel_3);
+		GridBagLayout gbl_panel_3 = new GridBagLayout();
+		gbl_panel_3.columnWidths = new int[]{0, 0, 0, 0};
+		gbl_panel_3.rowHeights = new int[]{0, 0};
+		gbl_panel_3.columnWeights = new double[]{0.0, 0.0, 0.0, Double.MIN_VALUE};
+		gbl_panel_3.rowWeights = new double[]{0.0, Double.MIN_VALUE};
+		panel_3.setLayout(gbl_panel_3);
+		
+		btnAlta = new JButton("Alta");
+		btnAlta.setFont(new Font("Tahoma", Font.BOLD, 16));
+		btnAlta.setForeground(new Color(0, 0, 0));
+		btnAlta.setBorder(new LineBorder(new Color(255, 255, 255)));
+		btnAlta.setBackground(new Color(0, 0, 0));
+		btnAlta.setOpaque(false);
+		GridBagConstraints gbc_btnAlta = new GridBagConstraints();
+		gbc_btnAlta.insets = new Insets(0, 0, 0, 5);
+		gbc_btnAlta.gridx = 0;
+		gbc_btnAlta.gridy = 0;
+		panel_3.add(btnAlta, gbc_btnAlta);
+		
+		btnBaja = new JButton("Baja");
+		btnBaja.setFont(new Font("Tahoma", Font.BOLD, 16));
+		btnBaja.setForeground(new Color(0, 0, 0));
+		btnBaja.setBorder(new LineBorder(new Color(255, 255, 255)));
+		btnBaja.setBackground(new Color(0, 0, 0));
+		btnBaja.setOpaque(false);
+		GridBagConstraints gbc_btnBaja = new GridBagConstraints();
+		gbc_btnBaja.insets = new Insets(0, 0, 0, 5);
+		gbc_btnBaja.gridx = 1;
+		gbc_btnBaja.gridy = 0;
+		panel_3.add(btnBaja, gbc_btnBaja);
+		
+		btnNuevo = new JButton("Nuevo");
+		btnNuevo.setFont(new Font("Tahoma", Font.BOLD, 16));
+		btnNuevo.setForeground(new Color(0, 0, 0));
+		btnNuevo.setBorder(new LineBorder(new Color(255, 255, 255)));
+		btnNuevo.setBackground(new Color(0, 0, 0));
+		btnNuevo.setOpaque(false);
+		GridBagConstraints gbc_btnNuevo = new GridBagConstraints();
+		gbc_btnNuevo.gridx = 2;
+		gbc_btnNuevo.gridy = 0;
+		panel_3.add(btnNuevo, gbc_btnNuevo);
 	}
 
 	public JTextField getTxtTitulo() {
@@ -345,24 +385,20 @@ public class UI extends JFrame {
 		return txtAutor;
 	}
 
+	public JTextField getTxtIsbn() {
+		return txtIsbn;
+	}
+
 	public JTextField getTxtPaginas() {
 		return txtPaginas;
 	}
 
-	public JTextField getTxtISBN() {
-		return txtISBN;
+	public JTable getTable() {
+		return table;
 	}
 
-	public JButton getBtnNuevo() {
-		return btnNuevo;
-	}
-
-	public JButton getBtnAlta() {
-		return btnAlta;
-	}
-
-	public JButton getBtnBaja() {
-		return btnBaja;
+	public JComboBox getComboTema() {
+		return comboTema;
 	}
 
 	public JCheckBox getChkCartone() {
@@ -385,12 +421,17 @@ public class UI extends JFrame {
 		return radialReedicion;
 	}
 
-	public JComboBox<Temas> getComboTema() {
-		return comboTema;
+	public JButton getBtnAlta() {
+		return btnAlta;
 	}
 
-	public void setTxtAutor(JTextField txtAutor) {
-		this.txtAutor = txtAutor;
+	public JButton getBtnBaja() {
+		return btnBaja;
 	}
 
+	public JButton getBtnNuevo() {
+		return btnNuevo;
+	}
+	
+	
 }
