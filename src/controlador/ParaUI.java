@@ -34,8 +34,8 @@ public class ParaUI extends UI {
 	 */
 	private void asignarEventos() {
 		this.btnNuevo.addActionListener(new EventoNuevo(this));
-		this.btnAlta.addActionListener(new EventoAlta(this));
-		this.btnBaja.addActionListener(new EventoBaja(this));
+		this.btnAlta.addActionListener(new EventoAlta(this, this.almacenamiento));
+		this.btnBaja.addActionListener(new EventoBaja(this, this.almacenamiento));
 		this.table.addMouseListener(new EventoTabla(this));
 	}
 
