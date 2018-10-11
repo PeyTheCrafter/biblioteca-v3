@@ -31,6 +31,7 @@ public class GestorBotones {
 	public void btn(boolean state) {
 		this.btnAlta(state);
 		this.btnBaja(state);
+		//this.btnModificar(state);
 	}
 	
 	public void chk(boolean state) {
@@ -50,6 +51,10 @@ public class GestorBotones {
 
 	public void btnBaja(boolean state) {
 		this.paraUI.getBtnBaja().setEnabled(state);
+	}
+	
+	public void btnModificar(boolean state) {
+		this.paraUI.getBtnModificar().setEnabled(state);
 	}
 
 	public void chkTapaDura(boolean state) {

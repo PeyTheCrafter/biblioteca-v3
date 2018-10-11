@@ -7,6 +7,7 @@ import controlador.ParaUI;
 import modelo.Estanteria;
 import modelo.Libro;
 import utiles.GestorAvisos;
+import utiles.Mensajes;
 import utiles.Validador;
 
 public class EventoAlta implements ActionListener {
@@ -24,26 +25,23 @@ public class EventoAlta implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (Validador.validarISBN(this.paraUI.getTxtIsbn().getText())) {
-			Libro libro = new Libro(this.paraUI.getTxtTitulo().getText(), this.paraUI.getTxtAutor().getText(),
-					this.paraUI.getComboTema().getSelectedIndex(), this.paraUI.getTxtPaginas().getText(),
-					this.paraUI.getTxtIsbn().getText(), this.paraUI.getChkCartone().isSelected(),
-					this.paraUI.getChkRustica().isSelected(), this.paraUI.getChkTapaDura().isSelected(),
-					this.paraUI.getRadialNovedad().isSelected());
+			Libro libro = this.paraUI.recogerDatosLibro();
 			boolean respuesta = this.almacenamiento.insertarLibro(libro);
 			if (!respuesta) {
 				if (this.almacenamiento.getUsoMemoria() == this.almacenamiento.getTamano()) {
-					aviso.error("Error al añadir el libro. Memoria llena.", "Error de inserción");
+					aviso.error(Mensajes.ErrorInsercion + " " + Mensajes.ErrorMemoria, "Error de inserción");
 				} else {
-					aviso.error("Error al añadir el libro.", "Error de inserción");
+					aviso.error(Mensajes.ErrorInsercion.toString(), "Error de inserción");
 				}
 			} else {
 				this.paraUI.insertarTable(libro);
-				aviso.informacion("Libro añadido.", "Información");
+				aviso.informacion(Mensajes.ExitoInsercion.toString(), "Información");
 			}
 			this.paraUI.botones.global(false);
 			this.paraUI.limpiarPantalla();
+			this.paraUI.limpiarISBN();
 		} else {
-			aviso.error("ISBN inválido.", "Error de ISBN");
+			aviso.error(Mensajes.ErrorIsbnInvalido.toString(), "Error de ISBN");
 		}
 	}
 }

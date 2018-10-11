@@ -5,7 +5,9 @@ import java.awt.event.ActionListener;
 
 import controlador.ParaUI;
 import modelo.Estanteria;
+import modelo.Libro;
 import utiles.GestorAvisos;
+import utiles.Mensajes;
 
 public class EventoBaja implements ActionListener {
 	private ParaUI paraUI;
@@ -23,10 +25,32 @@ public class EventoBaja implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		String isbn = this.paraUI.getSeleccionado();
 		int posicion = this.almacenamiento.posicionLibroISBN(isbn);
+		if (posicion != -1) {
+			Libro libro = this.almacenamiento.obtenerLibro(posicion);
+			int ejemplares = libro.getEjemplares();
+			if (ejemplares > 0) {
+				libro.setEjemplares(libro.getEjemplares() - 1);
+			} else {
+				if (this.almacenamiento.borrarLibroPosicion(posicion)) {
+					this.aviso.informacion(Mensajes.ExitoBorrar.toString(), "Información");
+					this.paraUI.limpiarISBN();
+					this.paraUI.limpiarPantalla();
+				} else {
+					this.aviso.error(Mensajes.ErrorBorrar.toString(), "Error al borrar");
+				}
+			}
+		}
+		this.paraUI.actualizarLista();
+	}
+
+	// @Override
+	public void actionPerformed_old(ActionEvent e) {
+		String isbn = this.paraUI.getSeleccionado();
+		int posicion = this.almacenamiento.posicionLibroISBN(isbn);
 		if (!this.almacenamiento.borrarLibroPosicion(posicion)) {
-			aviso.error("Error al borrar.", "Error de borrado");
+			aviso.error(Mensajes.ErrorBorrar.toString(), "Error de borrado");
 		} else {
-			aviso.informacion("Libro borrado.", "información");
+			aviso.informacion(Mensajes.ExitoBorrar.toString(), "información");
 		}
 		this.paraUI.actualizarLista();
 		this.paraUI.limpiarPantalla();

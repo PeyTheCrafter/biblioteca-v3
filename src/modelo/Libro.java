@@ -10,9 +10,10 @@ public class Libro {
 	private boolean rustico;
 	private boolean tapaDura;
 	private boolean novedad;
+	private int ejemplares;
 
 	public Libro(String titulo, String autor, int tema, String numPaginas, String isbn, boolean cartone,
-			boolean rustico, boolean tapaDura, boolean novedad) {
+			boolean rustico, boolean tapaDura, boolean novedad, int ejemplares) {
 		super();
 		this.titulo = titulo;
 		this.autor = autor;
@@ -23,6 +24,7 @@ public class Libro {
 		this.rustico = rustico;
 		this.tapaDura = tapaDura;
 		this.novedad = novedad;
+		this.ejemplares = ejemplares;
 	}
 
 	public Libro(String titulo) {
@@ -68,6 +70,14 @@ public class Libro {
 
 	public boolean isNovedad() {
 		return novedad;
+	}
+	
+	public int getEjemplares() {
+		return this.ejemplares;
+	}
+	
+	public void setEjemplares(int ejemplares) {
+		this.ejemplares = ejemplares;
 	}
 
 }
