@@ -2,7 +2,7 @@ package controlador;
 
 import java.awt.EventQueue;
 
-import vista.UI;
+import vista.UI_old;
 
 public class Principal {
 	/**

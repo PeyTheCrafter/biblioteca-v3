@@ -14,9 +14,9 @@ import modelo.Estanteria;
 import modelo.Libro;
 import utiles.GestorAvisos;
 import utiles.GestorBotones;
-import vista.UI;
+import vista.UI_old;
 
-public class ParaUI extends UI {
+public class ParaUI extends UI_old {
 	private static int TAMANO = 3;
 	private Estanteria almacenamiento = new Estanteria();
 	public GestorBotones botones = new GestorBotones(this);
