@@ -9,12 +9,12 @@ import modelo.Libro;
 import utiles.GestorAvisos;
 import utiles.Mensajes;
 
-public class EventoBaja implements ActionListener {
+public class EventoBajaLibro implements ActionListener {
 	private ParaUI paraUI;
 	private GestorAvisos aviso;
 	private Estanteria almacenamiento;
 
-	public EventoBaja(ParaUI paraUI, Estanteria almacenamiento) {
+	public EventoBajaLibro(ParaUI paraUI, Estanteria almacenamiento) {
 		super();
 		this.paraUI = paraUI;
 		this.almacenamiento = almacenamiento;
@@ -28,16 +28,12 @@ public class EventoBaja implements ActionListener {
 		if (posicion != -1) {
 			Libro libro = this.almacenamiento.obtenerLibro(posicion);
 			int ejemplares = libro.getEjemplares();
-			if (ejemplares > 0) {
-				libro.setEjemplares(libro.getEjemplares() - 1);
+			if (this.almacenamiento.borrarLibroPosicion(posicion)) {
+				this.aviso.informacion(Mensajes.ExitoBorrar.toString(), "Información");
+				this.paraUI.limpiarISBN();
+				this.paraUI.limpiarPantalla();
 			} else {
-				if (this.almacenamiento.borrarLibroPosicion(posicion)) {
-					this.aviso.informacion(Mensajes.ExitoBorrar.toString(), "Información");
-					this.paraUI.limpiarISBN();
-					this.paraUI.limpiarPantalla();
-				} else {
-					this.aviso.error(Mensajes.ErrorBorrar.toString(), "Error al borrar");
-				}
+				this.aviso.error(Mensajes.ErrorBorrar.toString(), "Error al borrar");
 			}
 		}
 		this.paraUI.actualizarLista();
@@ -54,7 +50,6 @@ public class EventoBaja implements ActionListener {
 		}
 		this.paraUI.actualizarLista();
 		this.paraUI.limpiarPantalla();
-		this.paraUI.botones.btnBaja(false);
 	}
 
 }

@@ -2,11 +2,32 @@ package modelo;
 
 import java.util.ArrayList;
 
+import controlador.acceso.Almacen;
+
 public class Estanteria {
 	private ArrayList<Libro> libros;
+	private Almacen almacen;
 
 	public Estanteria() {
 		this.libros = new ArrayList<>();
+		this.almacen = new Almacen("storage.data");
+		this.iniciarFichero();
+	}
+	
+	private void iniciarFichero() {
+		try {
+			this.cargar();
+		} catch (Exception e) {
+			this.almacen.almacena(this.libros);
+		}
+	}
+
+	private void guardar() {
+		this.almacen.almacena(this.libros);
+	}
+
+	private void cargar() {
+		this.libros = (ArrayList<Libro>) this.almacen.recuperar();
 	}
 
 	/**
@@ -47,16 +68,21 @@ public class Estanteria {
 	 * @return true si lo ha guardado, false si no.
 	 */
 	public boolean insertarLibro(Libro libro) {
+		this.cargar();
 		if (!this.comprobarISBNRepetido(libro.getIsbn())) {
-			return this.getLibros().add(libro);
+			this.getLibros().add(libro);
+			this.guardar();
+			return true;
 		}
 		return false;
 	}
-	
+
 	public boolean insertarLibro(Libro libro, int posicion) {
-		assert posicion >=0;
-		if(!this.comprobarISBNRepetido(libro.getIsbn())) {
+		this.cargar();
+		assert posicion >= 0;
+		if (!this.comprobarISBNRepetido(libro.getIsbn())) {
 			this.getLibros().add(posicion, libro);
+			this.guardar();
 		}
 		return this.obtenerLibro(posicion) != null && this.obtenerLibro(posicion).getIsbn().equals(libro.getIsbn());
 	}
@@ -69,6 +95,7 @@ public class Estanteria {
 	 * @return la posición si lo ha encontrado, -1 si no.
 	 */
 	public int posicionLibro(String nombre) {
+		this.cargar();
 		for (int i = 0; i < this.getLibros().size(); i++) {
 			if (this.getLibros().get(i).getTitulo().toLowerCase().equals(nombre.toLowerCase())) {
 				return i;
@@ -85,6 +112,7 @@ public class Estanteria {
 	 * @return la posición si lo ha encontrado, -1 si no.
 	 */
 	public int posicionLibroISBN(String isbn) {
+		this.cargar();
 		for (int i = 0; i < this.getLibros().size(); i++) {
 			if (this.getLibros().get(i).getIsbn().toLowerCase().equals(isbn.toLowerCase())) {
 				return i;
@@ -101,6 +129,7 @@ public class Estanteria {
 	 * @return la posición si lo encuentra, -1 si no.
 	 */
 	public int posicionLibroNombre(String nombre) {
+		this.cargar();
 		for (int i = 0; i < this.getLibros().size(); i++) {
 			if (this.getLibros().get(i).getTitulo().toLowerCase().equals(nombre.toLowerCase())) {
 				return i;
@@ -117,9 +146,13 @@ public class Estanteria {
 	 * @return true si se ha borrado, false si no.
 	 */
 	public boolean borrarLibroPosicion(int indice) {
+		this.cargar();
 		if (indice >= 0 && indice < this.libros.size()) {
 			Libro libro = this.getLibros().get(indice);
-			return this.getLibros().remove(indice) != null;
+			if (this.getLibros().remove(indice) != null) {
+				this.guardar();
+				return true;
+			}
 		}
 		return false;
 	}
@@ -132,8 +165,13 @@ public class Estanteria {
 	 * @return true si lo borra, false si no.
 	 */
 	public boolean borrarLibroISBN(String isbn) {
+		this.cargar();
 		int indice = this.posicionLibroISBN(isbn);
-		return this.getLibros().remove(indice) != null;
+		if (this.getLibros().remove(indice) == null) {
+			this.guardar();
+			return true;
+		}
+		return false;
 	}
 
 	/**
@@ -144,7 +182,8 @@ public class Estanteria {
 	 * @return true si está repetido, false si no.
 	 */
 	private boolean comprobarISBNRepetido(String isbn) {
-		if (this.getLibros().size() == 0) {
+		this.cargar();
+		if (this.getLibros().size() != 0) {
 			for (int i = 0; i < this.libros.size(); i++) {
 				if (this.getLibros().get(i) != null && this.getLibros().get(i).getIsbn().equals(isbn)) {
 					return true;

@@ -13,30 +13,31 @@ import controlador.eventos.*;
 import modelo.Estanteria;
 import modelo.Libro;
 import utiles.GestorAvisos;
-import utiles.GestorBotones;
+import utiles.GestorUI;
 import vista.UI_old;
 
 public class ParaUI extends UI_old {
+	private static ParaUI instance;
 	private static int TAMANO = 3;
 	private Estanteria almacenamiento = new Estanteria();
-	public GestorBotones botones = new GestorBotones(this);
+	public GestorUI botones = new GestorUI(this);
 
-	public ParaUI() {
+	private ParaUI() {
 		super();
 		this.table.setModel(this.getModel());
 		this.asignarEventos();
-		this.botones.global(false);
+		this.actualizarLista();
 	}
 
 	/**
 	 * Asigna los eventos de los componentes de la ventana.
 	 */
 	private void asignarEventos() {
-		this.btnNuevo.addActionListener(new EventoNuevo(this));
-		this.btnAlta.addActionListener(new EventoAlta(this, this.almacenamiento));
-		this.btnBaja.addActionListener(new EventoBaja(this, this.almacenamiento));
+		this.mntmNuevoLibro.addActionListener(new EventoAltaLibro(this, this.almacenamiento));
+		this.mntmVenderEjemplar.addActionListener(new EventoVentaEjemplar(this, this.almacenamiento));
+		this.getMntmBorrarLibro().addActionListener(new EventoBajaLibro(this, almacenamiento));
 		this.table.addMouseListener(new EventoTabla(this));
-		this.btnModificar.addActionListener(new EventoModificacion(this, this.almacenamiento));
+		this.mntmModificarEjemplar.addActionListener(new EventoModificacion(this, this.almacenamiento));
 		this.txtIsbn.addKeyListener(new EventoISBN(this, this.almacenamiento));
 	}
 
@@ -48,11 +49,12 @@ public class ParaUI extends UI_old {
 		this.txtPaginas.setText("");
 		this.txtTitulo.setText("");
 		this.comboTema.setSelectedIndex(0);
-		this.chkCartone.setSelected(false);
-		this.chkRustica.setSelected(false);
-		this.chkTapaDura.setSelected(false);
+		this.radioCartone.setSelected(false);
+		this.radioRustica.setSelected(false);
+		this.radioTapaDura.setSelected(false);
 		this.buttonGroup.clearSelection();
-		this.txtEjemplares.setText("");
+		this.getTxtEjemplares().setText("");
+		this.getTxtEditorial().setText("");
 	}
 
 	public void limpiarISBN() {
@@ -62,16 +64,20 @@ public class ParaUI extends UI_old {
 	public Libro recogerDatosLibro() {
 		String titulo = this.getTxtTitulo().getText();
 		String autor = this.getTxtAutor().getText();
+		String editorial = this.getTxtEditorial().getText();
 		int tema = this.getComboTema().getSelectedIndex();
 		String paginas = this.getTxtPaginas().getText();
 		String isbn = this.getTxtIsbn().getText();
-		boolean cartone = this.getChkCartone().isSelected();
-		boolean rustico = this.getChkRustica().isSelected();
-		boolean tapaDura = this.getChkTapaDura().isSelected();
+		boolean cartone = this.getRadioCartone().isSelected();
+		boolean rustico = this.getRadioRustica().isSelected();
+		boolean tapaDura = this.getRadioTapaDura().isSelected();
+		boolean espiral = this.getRadioEspiral().isSelected();
 		boolean novedad = this.getRadialNovedad().isSelected();
+		boolean reedicion = this.getRadialReedicion().isSelected();
 		int ejemplares = Integer.parseInt(this.getTxtEjemplares().getText());
 
-		return new Libro(titulo, autor, tema, paginas, isbn, cartone, rustico, tapaDura, novedad, ejemplares);
+		return new Libro(titulo, autor, editorial, tema, paginas, isbn, cartone, rustico, tapaDura, espiral, novedad,
+				reedicion, ejemplares);
 	}
 
 	/**
@@ -118,14 +124,12 @@ public class ParaUI extends UI_old {
 		this.comboTema.setSelectedIndex(libro.getTema());
 		this.txtPaginas.setText(libro.getNumPaginas());
 		this.txtIsbn.setText(libro.getIsbn());
-		this.chkCartone.setSelected(libro.isCartone());
-		this.chkRustica.setSelected(libro.isRustico());
-		this.chkTapaDura.setSelected(libro.isTapaDura());
-		if (libro.isNovedad()) {
-			this.radialNovedad.setSelected(true);
-		} else {
-			this.radialReedicion.setSelected(true);
-		}
+		this.radioCartone.setSelected(libro.isCartone());
+		this.radioRustica.setSelected(libro.isRustico());
+		this.radioTapaDura.setSelected(libro.isTapaDura());
+		this.getRadioEspiral().setSelected(libro.isEspiral());
+		this.getRadialNovedad().setSelected(libro.isNovedad());
+		this.getRadialReedicion().setSelected(libro.isReedicion());
 		this.txtEjemplares.setText(String.valueOf(libro.getEjemplares()));
 	}
 
@@ -181,5 +185,12 @@ public class ParaUI extends UI_old {
 
 	public Estanteria getAlmacenamiento() {
 		return this.almacenamiento;
+	}
+
+	public static ParaUI getInstance() {
+		if (instance == null) {
+			instance = new ParaUI();
+		}
+		return instance;
 	}
 }

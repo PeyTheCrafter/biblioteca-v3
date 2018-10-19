@@ -10,12 +10,12 @@ import utiles.GestorAvisos;
 import utiles.Mensajes;
 import utiles.Validador;
 
-public class EventoAlta implements ActionListener {
+public class EventoAltaLibro implements ActionListener {
 	private ParaUI paraUI;
 	private GestorAvisos aviso;
 	private Estanteria almacenamiento;
 
-	public EventoAlta(ParaUI paraUI, Estanteria almacenamiento) {
+	public EventoAltaLibro(ParaUI paraUI, Estanteria almacenamiento) {
 		super();
 		this.paraUI = paraUI;
 		this.almacenamiento = almacenamiento;
@@ -27,17 +27,12 @@ public class EventoAlta implements ActionListener {
 		if (Validador.validarISBN(this.paraUI.getTxtIsbn().getText())) {
 			Libro libro = this.paraUI.recogerDatosLibro();
 			boolean respuesta = this.almacenamiento.insertarLibro(libro);
-			if (!respuesta) {
-				if (this.almacenamiento.getUsoMemoria() == this.almacenamiento.getTamano()) {
-					aviso.error(Mensajes.ErrorInsercion + " " + Mensajes.ErrorMemoria, "Error de inserción");
-				} else {
-					aviso.error(Mensajes.ErrorInsercion.toString(), "Error de inserción");
-				}
-			} else {
+			if (respuesta) {
 				this.paraUI.insertarTable(libro);
-				aviso.informacion(Mensajes.ExitoInsercion.toString(), "Información");
+				this.aviso.informacion(Mensajes.ExitoInsercion.toString(), "Información");
+			} else {
+				this.aviso.informacion(Mensajes.ErrorIsbnRepetido.toString(), "Error de ISBN");
 			}
-			this.paraUI.botones.global(false);
 			this.paraUI.limpiarPantalla();
 			this.paraUI.limpiarISBN();
 		} else {

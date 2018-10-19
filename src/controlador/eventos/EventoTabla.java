@@ -19,12 +19,6 @@ public class EventoTabla implements MouseListener {
 	@Override
 	public void mouseClicked(java.awt.event.MouseEvent e) {
 		this.paraUI.mostrarDatos();
-		this.paraUI.botones.btnBaja(true);
-		this.paraUI.botones.btnModificar(true);
-		this.paraUI.botones.txt(true);
-		this.paraUI.botones.radial(true);
-		this.paraUI.botones.chk(true);
-		this.paraUI.botones.combo(true);
 	}
 
 	@Override
