@@ -8,7 +8,7 @@ import modelo.Libro;
 import utiles.GestorAvisos;
 import utiles.Mensajes;
 
-public class EventoVentaEjemplar implements ActionListener{
+public class EventoVentaEjemplar implements ActionListener {
 	private ParaUI paraUI;
 	private GestorAvisos aviso;
 	private Estanteria almacenamiento;
@@ -22,19 +22,24 @@ public class EventoVentaEjemplar implements ActionListener{
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		this.paraUI.cv.setVisible(true);
+		this.paraUI.mcv.setVisible(true);
+		int cantidad = Integer.valueOf(this.paraUI.mcv.getTxt().getText());
 		String isbn = this.paraUI.getSeleccionado();
 		int posicion = this.almacenamiento.posicionLibroISBN(isbn);
-		if (posicion != -1) {
-			Libro libro = this.almacenamiento.obtenerLibro(posicion);
-			int ejemplares = libro.getEjemplares();
-			if(ejemplares != 0) {
-				libro.setEjemplares(ejemplares - 1);
-			} else {
-				this.aviso.error("No hay existencias.", "Error de venta");
+		if (cantidad >= 0) {
+			if (posicion != -1) {
+				Libro libro = this.almacenamiento.obtenerLibro(posicion);
+				int ejemplares = libro.getEjemplares();
+				if (ejemplares - cantidad >= 0) {
+					this.almacenamiento.vender(posicion, cantidad);
+					this.paraUI.mcv.setVisible(false);
+				} else {
+					this.aviso.error("No hay existencias.", "Error de venta");
+				}
 			}
+		} else {
+			this.aviso.error("Cantidad inválida", "Error");
 		}
 		this.paraUI.actualizarLista();
 	}
-	
 }

@@ -63,7 +63,8 @@ public class UI_old extends JFrame {
 	protected GridBagConstraints gbc_txtEditorial;
 	private JRadioButton radioEspiral;
 	private final ButtonGroup buttonGroup_2 = new ButtonGroup();
-	public ConfirmacionVenta cv = new ConfirmacionVenta(this);
+	public ModalConfirmacionVenta mcv;
+	public ModalAnadirEjemplares mae;
 
 	/**
 	 * Create the frame.
@@ -88,7 +89,7 @@ public class UI_old extends JFrame {
 		mnAltas = new JMenu("Altas");
 		menuBar.add(mnAltas);
 
-		mntmNuevoEjemplar = new JMenuItem("Nuevo ejemplar");
+		mntmNuevoEjemplar = new JMenuItem("A\u00F1adir ejemplares");
 		mnAltas.add(mntmNuevoEjemplar);
 
 		mntmNuevoLibro = new JMenuItem("Nuevo libro");

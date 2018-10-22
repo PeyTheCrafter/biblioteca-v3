@@ -13,7 +13,7 @@ public class Estanteria {
 		this.almacen = new Almacen("storage.data");
 		this.iniciarFichero();
 	}
-	
+
 	private void iniciarFichero() {
 		try {
 			this.cargar();
@@ -28,6 +28,18 @@ public class Estanteria {
 
 	private void cargar() {
 		this.libros = (ArrayList<Libro>) this.almacen.recuperar();
+	}
+
+	public void vender(int posicion, int cantidad) {
+		assert posicion > -1;
+		assert cantidad > 0;
+		Libro libro = this.obtenerLibro(posicion);
+		int ejemplares = libro.getEjemplares();
+		if (ejemplares - cantidad >= 0) {
+			libro.setEjemplares(ejemplares - cantidad);
+		}
+		this.borrarLibroPosicion(posicion);
+		this.insertarLibro(libro, posicion);
 	}
 
 	/**

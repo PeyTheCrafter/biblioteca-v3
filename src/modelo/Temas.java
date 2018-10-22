@@ -2,7 +2,7 @@ package modelo;
 
 public enum Temas {
 	Void(""), Accion("Acción"), Aventuras("Aventuras"), Ciencia("Ciencia"), Biologia("Biología"), Misterio("MIsterio"), Drama(
-			"Drama"), Terror("Terror");
+			"Drama"), Terror("Terror"), Discursion("Discursión");
 	String tema;
 
 	private Temas(String tema) {

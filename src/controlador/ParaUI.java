@@ -1,32 +1,33 @@
 package controlador;
 
-import java.awt.Color;
-import java.awt.Component;
-
-import javax.swing.JDialog;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
+import javax.swing.JFrame;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
 import controlador.eventos.*;
 import modelo.Estanteria;
 import modelo.Libro;
-import utiles.GestorAvisos;
 import utiles.GestorUI;
+import vista.ModalAnadirEjemplares;
+import vista.ModalConfirmacionVenta;
 import vista.UI_old;
 
 public class ParaUI extends UI_old {
 	private static ParaUI instance;
-	private static int TAMANO = 3;
 	private Estanteria almacenamiento = new Estanteria();
 	public GestorUI botones = new GestorUI(this);
 
 	private ParaUI() {
 		super();
 		this.table.setModel(this.getModel());
+		this.crearModales();
 		this.asignarEventos();
 		this.actualizarLista();
+	}
+
+	private void crearModales() {
+		this.mcv = new ModalConfirmacionVenta(this);
+		this.mae = new ModalAnadirEjemplares(this);
 	}
 
 	/**
@@ -34,11 +35,18 @@ public class ParaUI extends UI_old {
 	 */
 	private void asignarEventos() {
 		this.mntmNuevoLibro.addActionListener(new EventoAltaLibro(this, this.almacenamiento));
-		this.mntmVenderEjemplar.addActionListener(new EventoVentaEjemplar(this, this.almacenamiento));
+		this.mntmVenderEjemplar.addActionListener(new EventoMostrarModal(this.mcv, true));
 		this.getMntmBorrarLibro().addActionListener(new EventoBajaLibro(this, almacenamiento));
 		this.table.addMouseListener(new EventoTabla(this));
 		this.mntmModificarEjemplar.addActionListener(new EventoModificacion(this, this.almacenamiento));
 		this.txtIsbn.addKeyListener(new EventoISBN(this, this.almacenamiento));
+		this.mcv.getBtnOk().addActionListener(new EventoVentaEjemplar(this, this.almacenamiento));
+		this.mae.getBtnOk().addActionListener(new EventoAltaEjemplar(this, this.almacenamiento));
+		this.mntmNuevoEjemplar.addActionListener(new EventoMostrarModal(this.mae, true));
+	}
+	
+	private void mostrarModal(JFrame frame, boolean state) {
+		frame.setVisible(state);
 	}
 
 	/**
@@ -131,6 +139,7 @@ public class ParaUI extends UI_old {
 		this.getRadialNovedad().setSelected(libro.isNovedad());
 		this.getRadialReedicion().setSelected(libro.isReedicion());
 		this.txtEjemplares.setText(String.valueOf(libro.getEjemplares()));
+		this.txtEditorial.setText(libro.getEditorial());
 	}
 
 	/*

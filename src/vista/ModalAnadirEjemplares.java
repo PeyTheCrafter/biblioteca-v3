@@ -9,6 +9,9 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import controlador.ParaUI;
+import controlador.eventos.EventoVentaEjemplar;
+import modelo.Estanteria;
+import modelo.Modalable;
 
 import java.awt.GridBagLayout;
 import javax.swing.JLabel;
@@ -16,36 +19,42 @@ import java.awt.GridBagConstraints;
 import java.awt.Font;
 import javax.swing.JTextField;
 import java.awt.Insets;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
-public class ConfirmacionVenta extends JDialog {
+public class ModalAnadirEjemplares extends JDialog implements Modalable{
 
 	private final JPanel contentPanel = new JPanel();
-	private JTextField textField;
+	protected JTextField textField;
+	private JButton okButton;
+	private JButton cancelButton;
 
 	/**
 	 * Create the dialog.
-	 * @param ui_old 
+	 * 
+	 * @param ui_old
 	 */
-	public ConfirmacionVenta(UI_old ui_old) {
+	public ModalAnadirEjemplares(UI_old ui_old) {
+		setResizable(false);
 		setModal(true);
-		setBounds(100, 100, 270, 225);
+		setBounds(100, 100, 270, 144);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		GridBagLayout gbl_contentPanel = new GridBagLayout();
-		gbl_contentPanel.columnWidths = new int[]{0, 0, 0, 0};
-		gbl_contentPanel.rowHeights = new int[]{0, 0, 0, 0, 0};
-		gbl_contentPanel.columnWeights = new double[]{0.0, 1.0, 0.0, Double.MIN_VALUE};
-		gbl_contentPanel.rowWeights = new double[]{1.0, 0.0, 0.0, 1.0, Double.MIN_VALUE};
+		gbl_contentPanel.columnWidths = new int[] { 0, 0, 0, 0 };
+		gbl_contentPanel.rowHeights = new int[] { 0, 0, 0, 0, 0 };
+		gbl_contentPanel.columnWeights = new double[] { 0.0, 1.0, 0.0, Double.MIN_VALUE };
+		gbl_contentPanel.rowWeights = new double[] { 1.0, 0.0, 0.0, 1.0, Double.MIN_VALUE };
 		contentPanel.setLayout(gbl_contentPanel);
 		{
-			JLabel lblCantidadAVender = new JLabel("Cantidad a vender:");
-			lblCantidadAVender.setFont(new Font("Tahoma", Font.BOLD, 16));
-			GridBagConstraints gbc_lblCantidadAVender = new GridBagConstraints();
-			gbc_lblCantidadAVender.insets = new Insets(0, 0, 5, 5);
-			gbc_lblCantidadAVender.gridx = 1;
-			gbc_lblCantidadAVender.gridy = 1;
-			contentPanel.add(lblCantidadAVender, gbc_lblCantidadAVender);
+			JLabel lblCantidadAReponer = new JLabel("Cantidad a reponer:");
+			lblCantidadAReponer.setFont(new Font("Tahoma", Font.BOLD, 16));
+			GridBagConstraints gbc_lblCantidadAReponer = new GridBagConstraints();
+			gbc_lblCantidadAReponer.insets = new Insets(0, 0, 5, 5);
+			gbc_lblCantidadAReponer.gridx = 1;
+			gbc_lblCantidadAReponer.gridy = 1;
+			contentPanel.add(lblCantidadAReponer, gbc_lblCantidadAReponer);
 		}
 		{
 			textField = new JTextField();
@@ -63,18 +72,26 @@ public class ConfirmacionVenta extends JDialog {
 			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
-				JButton okButton = new JButton("OK");
+				okButton = new JButton("OK");
 				okButton.setActionCommand("OK");
 				buttonPane.add(okButton);
 				getRootPane().setDefaultButton(okButton);
 			}
 			{
-				JButton cancelButton = new JButton("Cancel");
+				cancelButton = new JButton("Cancel");
 				cancelButton.setActionCommand("Cancel");
 				buttonPane.add(cancelButton);
 			}
 			setLocationRelativeTo(ui_old);
 		}
+	}
+
+	public JTextField getTxt() {
+		return this.textField;
+	}
+
+	public JButton getBtnOk() {
+		return this.okButton;
 	}
 
 }
