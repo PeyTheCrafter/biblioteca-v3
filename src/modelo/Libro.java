@@ -2,7 +2,7 @@ package modelo;
 
 import java.io.Serializable;
 
-public class Libro implements Serializable {
+public class Libro implements Serializable, Comparable<Libro> {
 	private static final long serialVersionUID = 1L;
 	private String titulo;
 	private String autor;
@@ -102,4 +102,8 @@ public class Libro implements Serializable {
 		return reedicion;
 	}
 
+	@Override
+	public int compareTo(Libro o) {
+		return this.isbn.compareTo(o.isbn);
+	}
 }

@@ -34,7 +34,7 @@ public class ModalConfirmacionVenta extends JDialog implements Modalable {
 	 * 
 	 * @param ui_old
 	 */
-	public ModalConfirmacionVenta(UI_old ui_old) {
+	public ModalConfirmacionVenta(UI ui_old) {
 		setResizable(false);
 		setModal(true);
 		setBounds(100, 100, 270, 144);

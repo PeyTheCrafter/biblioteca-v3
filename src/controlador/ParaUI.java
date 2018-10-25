@@ -10,13 +10,13 @@ import modelo.Libro;
 import utiles.GestorUI;
 import vista.ModalAnadirEjemplares;
 import vista.ModalConfirmacionVenta;
-import vista.UI_old;
+import vista.UI;
 
-public class ParaUI extends UI_old {
+public class ParaUI extends UI {
 	private static ParaUI instance;
-	private Estanteria almacenamiento = new Estanteria();
 	public GestorUI botones = new GestorUI(this);
-
+	private Estanteria almacenamiento = new Estanteria();
+	
 	private ParaUI() {
 		super();
 		this.table.setModel(this.getModel());
@@ -34,7 +34,7 @@ public class ParaUI extends UI_old {
 	 * Asigna los eventos de los componentes de la ventana.
 	 */
 	private void asignarEventos() {
-		this.mntmNuevoLibro.addActionListener(new EventoAltaLibro(this, this.almacenamiento));
+		this.mntmNuevoLibro.addActionListener(new EventoAltaLibro(this, almacenamiento));
 		this.mntmVenderEjemplar.addActionListener(new EventoMostrarModal(this.mcv, true));
 		this.getMntmBorrarLibro().addActionListener(new EventoBajaLibro(this, almacenamiento));
 		this.table.addMouseListener(new EventoTabla(this));
@@ -180,7 +180,7 @@ public class ParaUI extends UI_old {
 	private TableModel getModel() {
 		return new DefaultTableModel(new Object[][] {}, new String[] { "Titulo", "ISBN", "Ejemplares" }) {
 			private static final long serialVersionUID = 1L;
-			boolean[] columnEditables = new boolean[] { false, false };
+			boolean[] columnEditables = new boolean[] { false, false, false };
 
 			public boolean isCellEditable(int row, int column) {
 				return columnEditables[column];

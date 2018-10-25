@@ -34,7 +34,7 @@ public class ModalAnadirEjemplares extends JDialog implements Modalable{
 	 * 
 	 * @param ui_old
 	 */
-	public ModalAnadirEjemplares(UI_old ui_old) {
+	public ModalAnadirEjemplares(UI ui_old) {
 		setResizable(false);
 		setModal(true);
 		setBounds(100, 100, 270, 144);

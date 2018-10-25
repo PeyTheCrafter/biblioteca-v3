@@ -3,6 +3,8 @@ package controlador.eventos;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.JOptionPane;
+
 import controlador.ParaUI;
 import modelo.Estanteria;
 import modelo.Libro;
@@ -27,29 +29,18 @@ public class EventoBajaLibro implements ActionListener {
 		int posicion = this.almacenamiento.posicionLibroISBN(isbn);
 		if (posicion != -1) {
 			Libro libro = this.almacenamiento.obtenerLibro(posicion);
-			int ejemplares = libro.getEjemplares();
-			if (this.almacenamiento.borrarLibroPosicion(posicion)) {
-				this.aviso.informacion(Mensajes.ExitoBorrar.toString(), "Información");
-				this.paraUI.limpiarISBN();
-				this.paraUI.limpiarPantalla();
-			} else {
-				this.aviso.error(Mensajes.ErrorBorrar.toString(), "Error al borrar");
+			int dialog = JOptionPane.showConfirmDialog(this.paraUI,
+					"Aún hay  " + libro.getEjemplares() + "  ejemplares en existencia. ¿Borrar?");
+			if (dialog == 0) {
+				if (this.almacenamiento.borrarLibroPosicion(posicion)) {
+					this.aviso.informacion(Mensajes.ExitoBorrar.toString(), "Información");
+					this.paraUI.limpiarISBN();
+					this.paraUI.limpiarPantalla();
+				} else {
+					this.aviso.error(Mensajes.ErrorBorrar.toString(), "Error al borrar");
+				}
 			}
 		}
 		this.paraUI.actualizarLista();
 	}
-
-	// @Override
-	public void actionPerformed_old(ActionEvent e) {
-		String isbn = this.paraUI.getSeleccionado();
-		int posicion = this.almacenamiento.posicionLibroISBN(isbn);
-		if (!this.almacenamiento.borrarLibroPosicion(posicion)) {
-			aviso.error(Mensajes.ErrorBorrar.toString(), "Error de borrado");
-		} else {
-			aviso.informacion(Mensajes.ExitoBorrar.toString(), "información");
-		}
-		this.paraUI.actualizarLista();
-		this.paraUI.limpiarPantalla();
-	}
-
 }

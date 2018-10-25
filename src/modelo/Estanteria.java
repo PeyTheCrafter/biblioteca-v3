@@ -18,7 +18,7 @@ public class Estanteria {
 		try {
 			this.cargar();
 		} catch (Exception e) {
-			this.almacen.almacena(this.libros);
+			this.guardar();
 		}
 	}
 
